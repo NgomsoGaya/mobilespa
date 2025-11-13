@@ -1,0 +1,18 @@
+.cta-section {
+  background-color: var(--color-accent);
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--color-white-text);
+}
+
+.cta-title {
+  font-size: var(--h2-size-desktop);
+  margin-bottom: 2rem;
+  color: var(--color-white-text);
+}
+
+@media (max-width: 768px) {
+  .cta-title {
+    font-size: var(--h2-size-mobile);
+  }
+}

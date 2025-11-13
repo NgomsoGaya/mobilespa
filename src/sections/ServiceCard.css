@@ -1,0 +1,38 @@
+.service-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+}
+.service-card:hover {
+  background-color: rgba(255, 255, 255, 0.3); /* Slightly less transparent on hover */
+  border-color: var(--color-accent); /* Light gold tint on border */
+}
+
+.service-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.service-title {
+  font-size: var(--h3-size-desktop);
+  margin-bottom: 0.5rem;
+}
+
+.service-description {
+  font-size: var(--body-size-mobile);
+  color: var(--color-charcoal-text);
+  margin-bottom: 1rem;
+  flex-grow: 1; /* Allows description to take up available space */
+}
+
+.service-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-bottom: 1.5rem;
+}

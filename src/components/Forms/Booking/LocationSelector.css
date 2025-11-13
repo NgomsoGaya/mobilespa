@@ -1,0 +1,40 @@
+.location-selector {
+  margin-bottom: 1rem;
+}
+
+.location-selector h4 {
+  font-family: 'Inter', sans-serif;
+  color: var(--color-text); /* Updated from --charcoal-text */
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+}
+
+.location-options {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.location-option {
+  background-color: var(--color-background); /* Updated from --off-white */
+  border: 1px solid var(--color-grey); /* Updated from --soft-grey */
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--color-text); /* Updated from --charcoal-text */
+  transition: all 0.3s ease;
+}
+
+.location-option:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.location-option.selected {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}

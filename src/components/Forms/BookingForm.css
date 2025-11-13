@@ -1,0 +1,8 @@
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}

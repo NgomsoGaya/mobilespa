@@ -1,0 +1,46 @@
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    color: var(--color-white-text); /* Inherit from hero-stats-row */
+}
+
+.stat-value {
+    font-family: var(--font-numbers-stats); /* Inter, 600 */
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-white-text); /* All text in hero section is white */
+    margin-bottom: 0.2rem;
+}
+
+.stat-label {
+    font-family: var(--font-body); /* Inter, 400-500 */
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* Responsive adjustments for StatCard */
+@media (max-width: 768px) {
+    .stat-value {
+        font-size: 1.8rem;
+    }
+    .stat-label {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .stat-card {
+        padding: 0.3rem 0.5rem;
+    }
+    .stat-value {
+        font-size: 1.5rem;
+    }
+    .stat-label {
+        font-size: 0.7rem;
+    }
+}

@@ -1,0 +1,50 @@
+/* Common styles (e.g., subtle card shadow, rounded corners) */
+.card {
+   background-color: rgba(255, 255, 255, 0.3); /* Increased opacity for more frosted look */
+  backdrop-filter: blur(20px); /* Increased blur for more glassy effect */
+  -webkit-backdrop-filter: blur(20px); /* For Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Slightly more pronounced for cards */
+  border-radius: 16px; /* Rounded corners as per spec */
+  padding: 2rem; /* Padding as per spec */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.button-primary {
+  background: linear-gradient(to right, var(--color-primary), var(--color-accent));
+  color: white;
+  background-size: 200% auto; /* For gradient animation */
+  transition: background-position 0.5s ease, transform 0.3s ease;
+}
+
+.button-primary:hover {
+  background-position: right center; /* Shift gradient on hover */
+  transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+.button-secondary {
+  background-color: white;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.button-secondary:hover {
+  background-color: var(--color-primary);
+  color: white;
+}

@@ -1,0 +1,8 @@
+:root {
+  --color-primary: #c4b69e; /* Muted Beige */
+  --color-accent: #b4a68f; /* Subtle Taupe */
+  --color-secondary-bg: #dbd2c3; /* Lightest Background */
+  --color-charcoal-text: #887d69; /* Darkest Text */
+  --color-dark-sage-footer: #aa9b82; /* Dark Footer */
+  --color-white-text: #dbd2c3; /* Light Text */
+}

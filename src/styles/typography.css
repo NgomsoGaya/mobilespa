@@ -1,0 +1,50 @@
+/* Responsive Typography */
+:root {
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-numbers-stats: 'Inter', sans-serif;
+
+  --h1-size-desktop: 64px;
+  --h1-size-mobile: 36px;
+  --h2-size-desktop: 48px;
+  --h2-size-mobile: 28px;
+  --h3-size-desktop: 32px;
+  --h3-size-mobile: 22px;
+  --body-size-desktop: 18px;
+  --body-size-mobile: 16px;
+  --caption-size: 14px;
+}
+
+h1 {
+  font-size: var(--h1-size-desktop);
+}
+
+h2 {
+  font-size: var(--h2-size-desktop);
+}
+
+h3 {
+  font-size: var(--h3-size-desktop);
+}
+
+body {
+  font-size: var(--body-size-desktop);
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: var(--h1-size-mobile);
+  }
+
+  h2 {
+    font-size: var(--h2-size-mobile);
+  }
+
+  h3 {
+    font-size: var(--h3-size-mobile);
+  }
+
+  body {
+    font-size: var(--body-size-mobile);
+  }
+}
