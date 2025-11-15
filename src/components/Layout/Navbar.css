@@ -1,6 +1,6 @@
 .navbar {
   position: fixed;
-  top: 10px;
+  top: 0px;
   left: 2.5%;
   right: 2.5%;
   max-width: 1200px;
@@ -30,7 +30,7 @@
 
 .navbar-links a {
   text-decoration: none;
-  color: var(--color-charcoal-text);
+  color: rgba(9, 9, 9, 0.58);
   font-weight: 500;
   padding: 0.5rem 1rem;
   transition: color 0.3s ease;
@@ -98,15 +98,16 @@
     position: fixed;
     top: 0;
     right: -100%; /* Start off-screen */
-    width: 70%;
-    height: calc(100vh - 70px); /* Adjusted height */
-    padding-top: 6rem;
-    background: rgba(255, 255, 255, 0.9);
+    width: 50%;
+    height: calc(30vh); /* Adjusted height */
+    padding-top: 4rem;
+    background: rgba(255, 255, 255, 0.961);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     transition: right 0.4s ease-in-out;
     z-index: 1005;
-    overflow-y: auto; /* Enable scrolling for long menus */
+    overflow-y: none; /* Enable scrolling for long menus */
+    border-radius: 7px;
   }
 
   .navbar-links.open {
@@ -115,10 +116,10 @@
   }
 
   .navbar-links a {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.05rem;
     width: 100%;
-    text-align: center;
+    text-align: left;
   }
 
   .navbar-right {

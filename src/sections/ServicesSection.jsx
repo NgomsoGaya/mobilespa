@@ -16,23 +16,36 @@ const services = [
   },
   {
     icon: facial,
-    title: 'Facial Treatments',
+    title: 'Skincare Therapy',
     description: 'Organic facials with gentle expert care.',
     price: 'R95',
   },
   {
     icon: couplesTherapy,
-    title: 'Couples Wellness',
+    title: 'Hand & Foot Care',
     description: 'Side-by-side relaxation treatments.',
     price: 'R220',
   },
   {
     icon: aromatherapy,
-    title: 'Aromatherapy',
+    title: 'Waxing & Tinting',
+    description: 'Mind–body balance with essential oils.',
+    price: 'R85',
+  },
+  {
+    icon: aromatherapy,
+    title: 'Corporate Wellness',
+    description: 'Mind–body balance with essential oils.',
+    price: 'R85',
+  },
+  {
+    icon: aromatherapy,
+    title: 'Special Occasions & Pamper Parties',
     description: 'Mind–body balance with essential oils.',
     price: 'R85',
   },
 ];
+
 
 const ServicesSection = () => {
   return (

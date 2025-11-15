@@ -8,14 +8,14 @@ const HeroSection = () => {
         <section className="hero-section" id="hero-section">
             <div className="hero-overlay"></div>
             <div className="hero-content">
-                <p className="hero-label">Mobile Spa Excellence</p>
-                <h1 className="hero-title">Find Your Serenity</h1>
+                <p className="hero-label">Find Your Serenity</p>
+                <h1 className="hero-title">Wellness Mobile Spa</h1>
                 <p className="hero-subtitle">
                     Discover tranquility in the comfort of your home. Our expert therapists bring premium spa treatments directly to you.
                 </p>
                 <div className="hero-buttons">
-                    <Button type="primary">Book Your Session</Button>
-                    <Button type="secondary">Explore Services</Button>
+                    <Button href="#cta-section" type="primary">Book Your Session</Button>
+                    <Button href="#services" type="secondary">Explore Services</Button>
                 </div>
             </div>
             <div className="hero-stats-row">

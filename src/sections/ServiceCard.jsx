@@ -7,8 +7,9 @@ const ServiceCard = ({ icon, title, description, price }) => {
     <div className="service-card card">
       <img src={icon} alt={title} className="service-icon" />
       <h3 className="service-title">{title}</h3>
-      <p className="service-description">{description}</p>
-      <div className="service-price">Starting From: {price}</div>
+      {/* <p className="service-description">{description}</p> */}
+      {/* <div className="service-price">Starting From: {price}</div> */}
+      <br />
       <Button type="primary">Learn More</Button>
     </div>
   );
