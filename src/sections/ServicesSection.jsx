@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Slider from 'react-slick';
 import ServiceCard from './ServiceCard';
 import FadeInOnScroll from '../components/Transitions/FadeInOnScroll';
 import './ServicesSection.css';
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 import massageTherapy from '../assets/images/massagetherapy.jpg';
 import facial from '../assets/images/facial.jpg';
 import couplesTherapy from '../assets/images/couplestherapy.jpg';
@@ -46,23 +49,63 @@ const services = [
   },
 ];
 
-
 const ServicesSection = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    setIsMobile(mediaQuery.matches);
+
+    const handleResize = () => {
+      setIsMobile(mediaQuery.matches);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  };
+
   return (
     <section className="services-section" id="services">
       <FadeInOnScroll>
         <h2 className="section-title">Treatments for Your Well-Being</h2>
-        <div className="services-grid">
-          {services.map((service, index) => (
-            <ServiceCard
-              key={index}
-              icon={service.icon}
-              title={service.title}
-              description={service.description}
-              price={service.price}
-            />
-          ))}
-        </div>
+        {isMobile ? (
+          <Slider {...settings}>
+            {services.map((service, index) => (
+              <ServiceCard
+                key={index}
+                icon={service.icon}
+                title={service.title}
+                description={service.description}
+                price={service.price}
+              />
+            ))}
+          </Slider>
+        ) : (
+          <div className="services-grid">
+            {services.map((service, index) => (
+              <ServiceCard
+                key={index}
+                icon={service.icon}
+                title={service.title}
+                description={service.description}
+                price={service.price}
+              />
+            ))}
+          </div>
+        )}
       </FadeInOnScroll>
     </section>
   );
