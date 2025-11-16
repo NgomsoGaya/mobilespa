@@ -1,0 +1,63 @@
+.how-to-book-section {
+  padding: 4rem 2rem;
+  background-color: var(--color-primary);
+  text-align: center;
+}
+
+.how-to-book-section .section-title {
+  color: white;
+  margin-bottom: 3rem;
+}
+
+.how-to-book-desktop {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.how-to-book-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.how-to-book-card h3 {
+  font-size: var(--h3-size-desktop);
+  color: var(--color-text-primary);
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.how-to-book-card p {
+  font-size: var(--body-size-desktop);
+  color: var(--color-text-secondary);
+}
+
+.how-to-book-mobile {
+  display: none; /* Hidden by default, shown on mobile */
+}
+
+@media (max-width: 768px) {
+  .how-to-book-desktop {
+    display: none; /* Hide desktop version on mobile */
+  }
+
+  .how-to-book-mobile {
+    display: block; /* Show mobile version */
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .how-to-book-mobile .how-to-book-card {
+    margin-bottom: 1.5rem;
+  }
+
+  .how-to-book-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
