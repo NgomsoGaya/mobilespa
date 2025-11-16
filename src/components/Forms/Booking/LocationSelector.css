@@ -4,7 +4,7 @@
 
 .location-selector h4 {
   font-family: 'Inter', sans-serif;
-  color: var(--color-text); /* Updated from --charcoal-text */
+  color: black;
   margin-bottom: 0.8rem;
   font-weight: 500;
 }
@@ -16,7 +16,7 @@
 }
 
 .location-option {
-  background-color: var(--color-background); /* Updated from --off-white */
+  background-color: rgba(167, 153, 127, 0.815); /* Updated from --off-white */
   border: 1px solid var(--color-grey); /* Updated from --soft-grey */
   padding: 0.8rem 1.2rem;
   border-radius: 8px;

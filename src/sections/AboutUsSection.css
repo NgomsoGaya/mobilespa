@@ -1,15 +1,15 @@
-.why-choose-us-section {
+.about-us-section {
   padding: 4rem 2rem;
   background-color: var(--color-secondary-bg);
   text-align: center;
 }
 
-.why-choose-us-section .section-title {
+.about-us-section .section-title {
   color: var(--color-primary);
   margin-bottom: 3rem;
 }
 
-.why-choose-us-content {
+.about-us-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
@@ -18,13 +18,13 @@
   align-items: center;
 }
 
-.why-choose-us-text ul {
+.about-us-text ul {
   list-style: none;
   padding: 0;
   text-align: left;
 }
 
-.why-choose-us-text li {
+.about-us-text li {
   font-size: var(--body-size-desktop);
   margin-bottom: 1rem;
   position: relative;
@@ -32,14 +32,14 @@
   color: var(--color-charcoal-text);
 }
 
-.why-choose-us-text li::before {
+.about-us-text li::before {
   content: '✅'; /* Checkmark icon */
   position: absolute;
   left: 0;
   color: var(--color-primary);
 }
 
-.why-choose-us-testimonial {
+.about-us-testimonial {
   max-width: 500px;
   margin: 0 auto;
 }

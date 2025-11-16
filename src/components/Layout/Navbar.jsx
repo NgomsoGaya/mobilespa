@@ -26,9 +26,9 @@ const Navbar = () => {
           <a href="#services" onClick={handleLinkClick}>Services</a>
           <a href="#how-it-works" onClick={handleLinkClick}>How It Works</a>
           <a href="#cta-section" onClick={handleLinkClick}>How to book</a>
-          <a href="#" onClick={handleLinkClick}>About Us</a>
-          <a href="#" onClick={handleLinkClick}>Vouchers</a>
-          <a href="#" onClick={handleLinkClick}>Price List</a>
+          <a href="#about-us-section" onClick={handleLinkClick}>About Us</a>
+          <a href="#vouchers-section" onClick={handleLinkClick}>Vouchers</a>
+          <a href="#price-list-section" onClick={handleLinkClick}>Price List</a>
         </div>
       </div>
       <div className="navbar-right">
