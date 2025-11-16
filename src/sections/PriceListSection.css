@@ -63,6 +63,41 @@
   border-bottom: none;
 }
 
+.add-service-button {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-service-button:hover {
+  background-color: var(--color-accent);
+}
+
+.add-service-button.animate {
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    background-color: var(--color-primary);
+  }
+  50% {
+    transform: scale(1.2);
+    background-color: var(--color-accent);
+  }
+  100% {
+    transform: scale(1);
+    background-color: var(--color-primary);
+  }
+}
+
 @media (max-width: 768px) {
   .price-list-section .section-subtitle {
     font-size: var(--body-size-mobile);

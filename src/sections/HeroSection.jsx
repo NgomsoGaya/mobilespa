@@ -15,7 +15,7 @@ const HeroSection = () => {
                 </p>
                 <div className="hero-buttons">
                     <Button href="#cta-section" type="primary">Book Your Session</Button>
-                    <Button href="#services" type="secondary">Explore Services</Button>
+                    <Button href="#price-list-section" type="secondary">Explore Services</Button>
                 </div>
             </div>
             <div className="hero-stats-row">

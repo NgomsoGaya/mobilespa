@@ -1,10 +1,23 @@
 import React from 'react';
 import './Button.css';
 
-const Button = ({ children, type = 'primary', size = 'normal', onClick }) => {
+const Button = ({ children, type = 'primary', size = 'normal', onClick, href }) => {
   const sizeClass = size === 'large' ? 'button-large' : '';
+  const commonProps = {
+    className: `button ${type} ${sizeClass}`,
+    onClick: onClick,
+  };
+
+  if (href) {
+    return (
+      <a href={href} {...commonProps}>
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <button className={`button button-${type} ${sizeClass}`} onClick={onClick}>
+    <button {...commonProps}>
       {children}
     </button>
   );

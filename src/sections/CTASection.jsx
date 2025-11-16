@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import FadeInOnScroll from '../components/Transitions/FadeInOnScroll';
 import BookingSelector from '../components/Forms/Booking/BookingSelector';
 import BookingModal from '../components/Forms/Booking/BookingModal';
+import Button from '../components/UI/Button'; // Import Button component
 import './CTASection.css';
 
-const CTASection = () => {
+const CTASection = ({ selectedServices }) => { // Receive selectedServices as prop
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [bookingDetails, setBookingDetails] = useState(null);
-
-  // Dummy data for selected services - this would come from a service selection mechanism
-  const [selectedServices, setSelectedServices] = useState([
-    { id: 'massage', name: 'Massage Therapy', price: 'R120' },
-    { id: 'facial', name: 'Skincare Therapy', price: 'R95' },
-  ]);
 
   const handleContinueBooking = (details) => {
     setBookingDetails({ ...details, selectedServices }); // Pass selected services to modal
@@ -28,7 +23,16 @@ const CTASection = () => {
     <section className="cta-section" id="cta-section">
       <FadeInOnScroll>
         <h2 className="cta-title">How To Book?</h2>
-        <BookingSelector onContinue={handleContinueBooking} selectedServices={selectedServices} />
+        {selectedServices && selectedServices.length > 0 ? (
+          <BookingSelector onContinue={handleContinueBooking} selectedServices={selectedServices} />
+        ) : (
+          <div className="no-services-selected">
+            <p>Please select services from our price list to proceed with booking.</p>
+            <Button type="primary" onClick={() => window.location.href = '#price-list-section'}>
+              View Price List
+            </Button>
+          </div>
+        )}
       </FadeInOnScroll>
 
       {isModalOpen && (

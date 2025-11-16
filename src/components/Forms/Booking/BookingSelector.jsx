@@ -76,7 +76,7 @@ const BookingSelector = ({ onContinue, selectedServices }) => {
         onClick={handleContinueClick}
         disabled={!selectedDay || !selectedTime}
       >
-        Continue
+        Book via Whatsapp
       </Button>
     </div>
   );

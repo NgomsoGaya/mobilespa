@@ -12,36 +12,42 @@ import aromatherapy from '../assets/images/aromatherapy.jpg';
 
 const services = [
   {
+    id: 'massage-therapy', // Matching ID from PriceListSection
     icon: massageTherapy,
     title: 'Massage Therapy',
     description: 'Swedish, Deep Tissue, or Hot Stone to release tension.',
     price: 'R120',
   },
   {
+    id: 'skincare-therapy', // Matching ID from PriceListSection
     icon: facial,
     title: 'Skincare Therapy',
     description: 'Organic facials with gentle expert care.',
     price: 'R95',
   },
   {
+    id: 'hand-foot-care', // Matching ID from PriceListSection
     icon: couplesTherapy,
     title: 'Hand & Foot Care',
     description: 'Side-by-side relaxation treatments.',
     price: 'R220',
   },
   {
+    id: 'waxing-tinting', // Matching ID from PriceListSection
     icon: aromatherapy,
     title: 'Waxing & Tinting',
     description: 'Mind–body balance with essential oils.',
     price: 'R85',
   },
   {
+    id: 'corporate-wellness', // New ID for this service
     icon: aromatherapy,
     title: 'Corporate Wellness',
     description: 'Mind–body balance with essential oils.',
     price: 'R85',
   },
   {
+    id: 'special-occasions-pamper-parties', // New ID for this service
     icon: aromatherapy,
     title: 'Special Occasions & Pamper Parties',
     description: 'Mind–body balance with essential oils.',
@@ -90,6 +96,7 @@ const ServicesSection = () => {
                 title={service.title}
                 description={service.description}
                 price={service.price}
+                serviceId={service.id} // Pass service.id directly
               />
             ))}
           </Slider>
@@ -102,6 +109,7 @@ const ServicesSection = () => {
                 title={service.title}
                 description={service.description}
                 price={service.price}
+                serviceId={service.id} // Pass service.id directly
               />
             ))}
           </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import FadeInOnScroll from '../components/Transitions/FadeInOnScroll';
 import './PriceListSection.css';
 
@@ -6,40 +6,50 @@ const services = [
   {
     category: 'Massage Therapy',
     items: [
-      { name: 'Swedish Massage', duration: '60 min', price: 'R120' },
-      { name: 'Deep Tissue Massage', duration: '60 min', price: 'R150' },
-      { name: 'Hot Stone Massage', duration: '75 min', price: 'R200' },
-      { name: 'Aromatherapy Massage', duration: '60 min', price: 'R140' },
+      { id: 'swedish-massage', name: 'Swedish Massage', duration: '60 min', price: 'R120' },
+      { id: 'deep-tissue-massage', name: 'Deep Tissue Massage', duration: '60 min', price: 'R150' },
+      { id: 'hot-stone-massage', name: 'Hot Stone Massage', duration: '75 min', price: 'R200' },
+      { id: 'aromatherapy-massage', name: 'Aromatherapy Massage', duration: '60 min', price: 'R140' },
     ],
   },
   {
     category: 'Skincare Therapy',
     items: [
-      { name: 'Organic Facial', duration: '60 min', price: 'R95' },
-      { name: 'Hydrating Facial', duration: '60 min', price: 'R110' },
-      { name: 'Anti-Aging Facial', duration: '75 min', price: 'R130' },
+      { id: 'organic-facial', name: 'Organic Facial', duration: '60 min', price: 'R95' },
+      { id: 'hydrating-facial', name: 'Hydrating Facial', duration: '60 min', price: 'R110' },
+      { id: 'anti-aging-facial', name: 'Anti-Aging Facial', duration: '75 min', price: 'R130' },
     ],
   },
   {
-    category: 'Hand & Foot Care',
+    category: 'hand-foot-care',
     items: [
-      { name: 'Classic Manicure', duration: '45 min', price: 'R80' },
-      { name: 'Spa Pedicure', duration: '60 min', price: 'R120' },
-      { name: 'Gel Manicure', duration: '60 min', price: 'R150' },
+      { id: 'classic-manicure', name: 'Classic Manicure', duration: '45 min', price: 'R80' },
+      { id: 'spa-pedicure', name: 'Spa Pedicure', duration: '60 min', price: 'R120' },
+      { id: 'gel-manicure', name: 'Gel Manicure', duration: '60 min', price: 'R150' },
     ],
   },
   {
-    category: 'Waxing & Tinting',
+    category: 'waxing-tinting',
     items: [
-      { name: 'Eyebrow Wax', duration: '15 min', price: 'R40' },
-      { name: 'Full Leg Wax', duration: '45 min', price: 'R180' },
-      { name: 'Bikini Wax', duration: '30 min', price: 'R100' },
-      { name: 'Eyelash Tint', duration: '20 min', price: 'R60' },
+      { id: 'eyebrow-wax', name: 'Eyebrow Wax', duration: '15 min', price: 'R40' },
+      { id: 'full-leg-wax', name: 'Full Leg Wax', duration: '45 min', price: 'R180' },
+      { id: 'bikini-wax', name: 'Bikini Wax', duration: '30 min', price: 'R100' },
+      { id: 'eyelash-tint', name: 'Eyelash Tint', duration: '20 min', price: 'R60' },
     ],
   },
 ];
 
-const PriceListSection = () => {
+const PriceListSection = ({ onAddService }) => {
+  const [animatedButtons, setAnimatedButtons] = useState({});
+
+  const handleAddServiceClick = (item) => {
+    onAddService(item);
+    setAnimatedButtons((prev) => ({ ...prev, [item.id]: true }));
+    setTimeout(() => {
+      setAnimatedButtons((prev) => ({ ...prev, [item.id]: false }));
+    }, 500); // Animation duration
+  };
+
   return (
     <section className="price-list-section" id="price-list-section">
       <FadeInOnScroll>
@@ -50,22 +60,14 @@ const PriceListSection = () => {
         <div className="price-list-content">
           {services.map((serviceCategory, index) => (
             <div key={index} className="price-category">
-              <h3>{serviceCategory.category}</h3>
+              <h3 id={serviceCategory.category.toLowerCase().replace(/\s/g, '-')}>{serviceCategory.category}</h3>
               <table className="price-table">
                 <thead>
-                  <tr>
-                    <th>Service</th>
-                    <th>Duration</th>
-                    <th>Price</th>
-                  </tr>
+                  <tr><th>Service</th><th>Duration</th><th>Price</th><th></th></tr>
                 </thead>
                 <tbody>
                   {serviceCategory.items.map((item, itemIndex) => (
-                    <tr key={itemIndex}>
-                      <td>{item.name}</td>
-                      <td>{item.duration}</td>
-                      <td>{item.price}</td>
-                    </tr>
+                    <tr key={itemIndex} id={item.id}><td>{item.name}</td><td>{item.duration}</td><td>{item.price}</td><td><button className={`add-service-button ${animatedButtons[item.id] ? 'animate' : ''}`} onClick={() => handleAddServiceClick(item)}>+</button></td></tr>
                   ))}
                 </tbody>
               </table>

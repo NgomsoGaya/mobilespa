@@ -99,6 +99,7 @@
     .hero-buttons {
         flex-direction: column;
         gap: 1rem;
+        align-items: center; /* Added for centering */
     }
     .hero-stats-row {
         flex-wrap: wrap;
@@ -120,6 +121,7 @@
     .hero-buttons {
         flex-direction: column;
         gap: 1rem;
+        align-items: center; /* Added for centering */
     }
     .hero-stats-row {
         flex-direction: row;
