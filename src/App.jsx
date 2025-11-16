@@ -17,11 +17,11 @@ function App() {
       <main>
         <HeroSection />
         <ServicesSection />
-        <AdvantageSection />
-        <AboutUsSection />
-        <PriceListSection />
-        <VouchersSection /> {/* New component usage */}
         <CTASection />
+        <PriceListSection />
+        <AdvantageSection />
+        <VouchersSection /> {/* New component usage */}
+        <AboutUsSection />
       </main>
       <Footer />
     </div>

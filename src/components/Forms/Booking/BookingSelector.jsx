@@ -91,7 +91,7 @@ const BookingSelector = () => {
         onClick={handleBookNow}
         disabled={!selectedLocation || !selectedDay || !selectedTime}
       >
-        Book Now
+        Book via Whatsapp
       </Button>
     </div>
   );

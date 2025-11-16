@@ -7,7 +7,7 @@ const CTASection = () => {
   return (
     <section className="cta-section" id="cta-section">
       <FadeInOnScroll>
-        <h2 className="cta-title">Ready to Experience Ultimate Convenience?</h2>
+        <h2 className="cta-title">How To Book?</h2>
         <BookingSelector /> {/* Use the new BookingSelector component */}
       </FadeInOnScroll>
     </section>

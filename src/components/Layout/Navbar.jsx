@@ -24,11 +24,11 @@ const Navbar = () => {
         </a>
         <div className={`navbar-links ${isMenuOpen ? 'open' : ''}`}>
           <a href="#services" onClick={handleLinkClick}>Services</a>
-          <a href="#how-it-works" onClick={handleLinkClick}>How It Works</a>
           <a href="#cta-section" onClick={handleLinkClick}>How to book</a>
-          <a href="#about-us-section" onClick={handleLinkClick}>About Us</a>
-          <a href="#vouchers-section" onClick={handleLinkClick}>Vouchers</a>
           <a href="#price-list-section" onClick={handleLinkClick}>Price List</a>
+          <a href="#how-it-works" onClick={handleLinkClick}>How It Works</a>
+          <a href="#vouchers-section" onClick={handleLinkClick}>Vouchers</a>
+          <a href="#about-us-section" onClick={handleLinkClick}>About Us</a>
         </div>
       </div>
       <div className="navbar-right">
