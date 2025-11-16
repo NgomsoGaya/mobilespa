@@ -9,18 +9,18 @@
 
 .booking-selector h3 {
   font-family: 'Playfair Display', serif;
-  color: var(--color-charcoal-text);
+  color: var(--color-text-primary);
   text-align: center;
   margin-bottom: 1rem;
 }
 
-.booking-selector .button-primary {
+.booking-selector .button.primary {
   width: 100%;
   padding: 1rem;
   font-size: 1.1rem;
 }
 
-.booking-selector .button-primary:disabled {
-  background-color: var(--color-secondary-bg);
+.booking-selector .button.primary:disabled {
+  background-color: var(--color-text-secondary);
   cursor: not-allowed;
 }

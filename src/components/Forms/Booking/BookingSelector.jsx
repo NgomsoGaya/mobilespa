@@ -1,20 +1,12 @@
 import React, { useState } from 'react';
-import LocationSelector from './LocationSelector';
 import DaySelector from './DaySelector';
 import TimeSelector from './TimeSelector';
 import Button from '../../UI/Button';
 import './BookingSelector.css';
 
-const BookingSelector = () => {
-  const [selectedLocation, setSelectedLocation] = useState(null);
+const BookingSelector = ({ onContinue, selectedServices }) => {
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
-
-  const handleLocationSelect = (location) => {
-    setSelectedLocation(location);
-    setSelectedDay(null); // Reset day and time if location changes
-    setSelectedTime(null);
-  };
 
   const handleDaySelect = (day) => {
     setSelectedDay(day);
@@ -25,24 +17,18 @@ const BookingSelector = () => {
     setSelectedTime(time);
   };
 
-  const handleBookNow = () => {
-    if (selectedLocation && selectedDay && selectedTime) {
-      alert(`Booking confirmed for ${selectedLocation} on ${selectedDay.toDateString()} at ${selectedTime}`);
-      // In a real application, you would send this data to a backend
+  const handleContinueClick = () => {
+    if (selectedDay && selectedTime) {
+      // Assuming a default location since location selection is removed
+      const selectedLocation = { id: 'mobile', name: 'Mobile Service (Your Home)' };
+      onContinue({ selectedLocation, selectedDay, selectedTime });
     } else {
-      alert('Please select a location, day, and time.');
+      alert('Please select a day and time.');
     }
   };
 
-  // Dummy data for demonstration
-  const locations = [
-    { id: 'mobile', name: 'Mobile Service (Your Home)' },
-    { id: 'studio', name: 'Main Studio' },
-  ];
-
-  const getAvailableDays = (locationId) => {
-    // In a real app, this would fetch available days from a backend based on location
-    if (!locationId) return [];
+  const getAvailableDays = () => {
+    // In a real app, this would fetch available days from a backend
     const today = new Date();
     const available = [];
     for (let i = 0; i < 7; i++) {
@@ -53,32 +39,31 @@ const BookingSelector = () => {
     return available;
   };
 
-  const getAvailableTimes = (locationId, day) => {
-    // In a real app, this would fetch available times from a backend based on location and day
-    if (!locationId || !day) return [];
+  const getAvailableTimes = (day) => {
+    // In a real app, this would fetch available times from a backend based on day
+    if (!day) return [];
     const times = ['9:00 AM', '10:30 AM', '12:00 PM', '2:00 PM', '3:30 PM', '5:00 PM'];
     return times;
   };
 
-  const availableDays = getAvailableDays(selectedLocation?.id);
-  const availableTimes = getAvailableTimes(selectedLocation?.id, selectedDay);
+  const availableDays = getAvailableDays();
+  const availableTimes = getAvailableTimes(selectedDay);
 
   return (
     <div className="booking-selector card">
+      <h3>Selected Services:</h3>
+      <ul className="selected-services-list">
+        {selectedServices.map(service => (
+          <li key={service.id}>{service.name} - {service.price}</li>
+        ))}
+      </ul>
       <h3>Select Your Booking Details</h3>
-      <LocationSelector
-        locations={locations}
-        selectedLocation={selectedLocation}
-        onSelectLocation={handleLocationSelect}
+      <DaySelector
+        availableDays={availableDays}
+        selectedDay={selectedDay}
+        onSelectDay={handleDaySelect}
       />
-      {selectedLocation && (
-        <DaySelector
-          availableDays={availableDays}
-          selectedDay={selectedDay}
-          onSelectDay={handleDaySelect}
-        />
-      )}
-      {selectedLocation && selectedDay && (
+      {selectedDay && (
         <TimeSelector
           availableTimes={availableTimes}
           selectedTime={selectedTime}
@@ -88,10 +73,10 @@ const BookingSelector = () => {
       <Button
         type="primary"
         size="large"
-        onClick={handleBookNow}
-        disabled={!selectedLocation || !selectedDay || !selectedTime}
+        onClick={handleContinueClick}
+        disabled={!selectedDay || !selectedTime}
       >
-        Book via Whatsapp
+        Continue
       </Button>
     </div>
   );
