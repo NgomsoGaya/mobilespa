@@ -42,7 +42,7 @@ const BookingModal = ({ isOpen, onClose, bookingDetails }) => {
       *Customer Phone:* ${customerDetails.phone}
       *Address:* ${customerDetails.address}
     `;
-    const whatsappUrl = `https://wa.me/YOUR_WHATSAPP_NUMBER?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/+27774478258?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
     onClose();
   };
