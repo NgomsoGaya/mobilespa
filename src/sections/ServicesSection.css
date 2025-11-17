@@ -6,7 +6,7 @@
 
 .section-title {
   font-size: var(--h2-size-desktop);
-  color: var(--color-primary);
+  color: #000000;
   margin-bottom: 3rem;
 }
 
@@ -21,6 +21,5 @@
 @media (max-width: 768px) {
   .section-title {
     font-size: var(--h2-size-mobile);
-    /* color: var(--color-primary); */
   }
 }

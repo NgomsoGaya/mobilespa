@@ -86,7 +86,7 @@ const ServicesSection = () => {
   return (
     <section className="services-section" id="services">
       <FadeInOnScroll>
-        <h2 className="section-title">Our Servicees</h2>
+        <h2 className="section-title">Our Services</h2>
         {isMobile ? (
           <Slider {...settings}>
             {services.map((service, index) => (

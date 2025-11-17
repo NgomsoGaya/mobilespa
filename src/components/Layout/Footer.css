@@ -1,6 +1,6 @@
 .footer {
-  background-color: var(--color-dark-sage);
-  color: var(--color-secondary);
+  background-color: var(--color-dark-sage-footer);
+  color: var(--color-white-text);
   padding: 4rem 2rem;
 }
 

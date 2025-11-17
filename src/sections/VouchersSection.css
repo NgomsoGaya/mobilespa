@@ -5,7 +5,7 @@
 }
 
 .vouchers-section .section-title {
-  color: var(--color-primary);
+  color: #000000;
   margin-bottom: 1rem;
 }
 
@@ -46,7 +46,7 @@
 
 .vouchers-form-container h3 {
   font-size: var(--h3-size-desktop);
-  color: var(--color-primary);
+  color: #000000;
   margin-bottom: 2rem;
 }
 

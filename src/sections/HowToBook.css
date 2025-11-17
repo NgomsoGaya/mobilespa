@@ -5,7 +5,7 @@
 }
 
 .how-to-book-section .section-title {
-  color: white;
+  color: #000000;
   margin-bottom: 3rem;
 }
 
@@ -26,14 +26,14 @@
 
 .how-to-book-card h3 {
   font-size: var(--h3-size-desktop);
-  color: var(--color-text-primary);
+  color: #000000;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
 }
 
 .how-to-book-card p {
   font-size: var(--body-size-desktop);
-  color: var(--color-text-secondary);
+  color: #000000;
 }
 
 .how-to-book-mobile {
