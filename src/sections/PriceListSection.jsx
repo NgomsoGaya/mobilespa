@@ -63,7 +63,7 @@ const PriceListSection = ({ onAddService }) => {
               <h3 id={serviceCategory.category.toLowerCase().replace(/\s/g, '-')}>{serviceCategory.category}</h3>
               <table className="price-table">
                 <thead>
-                  <tr><th>Service</th><th>Duration</th><th>Price</th><th></th></tr>
+                  <tr><th>Service</th><th>Duration</th><th>Price</th><th>{''}</th></tr>
                 </thead>
                 <tbody>
                   {serviceCategory.items.map((item, itemIndex) => (
