@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../components/UI/Button';
 import './ServiceCard.css';
 
-const ServiceCard = ({ icon, title, description, price }) => {
+const ServiceCard = ({ icon, title, description, price, serviceId }) => {
   return (
     <div className="service-card card">
       <img src={icon} alt={title} className="service-icon" />
@@ -10,7 +10,7 @@ const ServiceCard = ({ icon, title, description, price }) => {
       {/* <p className="service-description">{description}</p> */}
       {/* <div className="service-price">Starting From: {price}</div> */}
       <br />
-      <Button type="primary">Learn More</Button>
+      <Button type="primary" href={`#${serviceId}`}>Learn More</Button>
     </div>
   );
 };

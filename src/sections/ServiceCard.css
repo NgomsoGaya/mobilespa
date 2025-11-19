@@ -36,3 +36,10 @@
   color: var(--color-accent);
   margin-bottom: 1.5rem;
 }
+
+@media (max-width: 768px) {
+  .service-card .button {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}

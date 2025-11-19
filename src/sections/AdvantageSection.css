@@ -1,12 +1,12 @@
 .advantage-section {
   padding: 4rem 2rem;
   background-color: var(--color-primary);
-  color: white;
+  color: var(--color-white-text);
   text-align: center;
 }
 
 .advantage-section .section-title {
-  color: white;
+  color: var(--color-white-text);
 }
 
 .advantage-grid {
