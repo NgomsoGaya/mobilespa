@@ -12,15 +12,56 @@
 .price-list-section .section-subtitle {
   font-size: var(--body-size-desktop);
   color: #000000;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
+}
+
+.price-list-section .button {
+  display: inline-block;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  transition: background-color 0.3s ease;
+}
+
+.price-list-section .button:hover {
+  background-color: var(--color-accent);
+}
+
+.mini-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.mini-nav-button {
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mini-nav-button:hover {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+}
+
+.mini-nav-button.active {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
 }
 
 .price-list-content {
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
 }
 
 .price-category {

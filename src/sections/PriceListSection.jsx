@@ -40,6 +40,7 @@ const services = [
 ];
 
 const PriceListSection = ({ onAddService }) => {
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const [animatedButtons, setAnimatedButtons] = useState({});
 
   const handleAddServiceClick = (item) => {
@@ -50,6 +51,8 @@ const PriceListSection = ({ onAddService }) => {
     }, 500); // Animation duration
   };
 
+  const selectedCategory = services[selectedCategoryIndex];
+
   return (
     <section className="price-list-section" id="price-list-section">
       <FadeInOnScroll>
@@ -57,22 +60,32 @@ const PriceListSection = ({ onAddService }) => {
         <p className="section-subtitle">
           Find the perfect treatment to rejuvenate your mind, body, and soul.
         </p>
-        <div className="price-list-content">
-          {services.map((serviceCategory, index) => (
-            <div key={index} className="price-category">
-              <h3 id={serviceCategory.category.toLowerCase().replace(/\s/g, '-')}>{serviceCategory.category}</h3>
-              <table className="price-table">
-                <thead>
-                  <tr><th>Service</th><th>Duration</th><th>Price</th><th>{''}</th></tr>
-                </thead>
-                <tbody>
-                  {serviceCategory.items.map((item, itemIndex) => (
-                    <tr key={itemIndex} id={item.id}><td>{item.name}</td><td>{item.duration}</td><td>{item.price}</td><td><button className={`add-service-button ${animatedButtons[item.id] ? 'animate' : ''}`} onClick={() => handleAddServiceClick(item)}>+</button></td></tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+        <a href="./src/assets/images/Mobile Spa Price List.pdf" className="button" download>View and Download Pricelist</a>
+        <div className="mini-nav">
+          {services.map((category, index) => (
+            <button
+              key={index}
+              className={`mini-nav-button ${selectedCategoryIndex === index ? 'active' : ''}`}
+              onClick={() => setSelectedCategoryIndex(index)}
+            >
+              {category.category}
+            </button>
           ))}
+        </div>
+        <div className="price-list-content">
+          <div className="price-category">
+            <h3 id={selectedCategory.category.toLowerCase().replace(/\s/g, '-')}>{selectedCategory.category}</h3>
+            <table className="price-table">
+              <thead>
+                <tr><th>Service</th><th>Duration</th><th>Price</th><th>{''}</th></tr>
+              </thead>
+              <tbody>
+                {selectedCategory.items.map((item, itemIndex) => (
+                  <tr key={itemIndex} id={item.id}><td>{item.name}</td><td>{item.duration}</td><td>{item.price}</td><td><button className={`add-service-button ${animatedButtons[item.id] ? 'animate' : ''}`} onClick={() => handleAddServiceClick(item)}>+</button></td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </FadeInOnScroll>
     </section>
