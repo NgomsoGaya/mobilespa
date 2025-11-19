@@ -50,6 +50,12 @@
   margin-bottom: 2rem;
 }
 
+.voucher-toggle {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
 .voucher-form {
   display: flex;
   flex-direction: column;

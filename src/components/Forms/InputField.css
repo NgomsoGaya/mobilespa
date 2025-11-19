@@ -6,6 +6,7 @@
 .input-field label {
   margin-bottom: 0.5rem;
   font-weight: 500;
+  text-align: left;
 }
 
 .input-field input {

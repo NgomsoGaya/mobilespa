@@ -58,7 +58,7 @@ const PriceListSection = ({ onAddService }) => {
       <FadeInOnScroll>
         <h2 className="section-title">Our Services & Pricing</h2>
         <p className="section-subtitle">
-          Find the perfect treatment to rejuvenate your mind, body, and soul.
+          Find the perfect treatment to nourish your mind, body, and soul.
         </p>
         <a href="./src/assets/images/Mobile Spa Price List.pdf" className="button" download>View and Download Pricelist</a>
         <div className="mini-nav">

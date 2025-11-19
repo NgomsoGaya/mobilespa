@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="footer-column">
           <h4>Contact Info</h4>
           <p>+1 (123) 456-7890</p>
-          <p>contact@serenetouch.com</p>
+          <p>contact@wellnessmobilespa.com</p>
           <p>Mon - Sun: 9am - 8pm</p>
         </div>
         <div className="footer-column">
@@ -27,7 +27,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>&copy; 2025 The Serene Touch. All Rights Reserved.</p>
+        <p>&copy; 2025 Wellness Mobile Spa. All Rights Reserved.</p>
       </div>
     </footer>
   );

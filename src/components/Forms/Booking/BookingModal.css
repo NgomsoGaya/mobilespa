@@ -51,6 +51,14 @@
 .modal-step-1 p {
   color: #000000;
   margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.modal-services-list {
+  list-style-type: none; /* Remove default bullet points */
+  padding-left: 0; /* Remove default padding */
+  margin-bottom: 1rem;
+  text-align: left; /* Ensure left alignment */
 }
 
 .modal-step-1 .button.primary,
