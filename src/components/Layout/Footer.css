@@ -34,6 +34,35 @@
   color: var(--color-accent);
 }
 
+.footer-column-center {
+  text-align: center;
+}
+
+.social-icons {
+  display: inline-flex;
+  gap: 1rem;
+}
+
+.social-btn {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.social-btn:hover {
+  transform: scale(1.1);
+}
+
+.social-btn img {
+  width: 20px;
+  height: 20px;
+}
+
 .footer-bottom {
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.1);

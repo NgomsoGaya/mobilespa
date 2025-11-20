@@ -1,5 +1,7 @@
 import React from 'react';
 import './Footer.css';
+import instagramIcon from '../../assets/images/instagram.svg';
+import whatsappIcon from '../../assets/images/whatsapp.svg';
 
 const Footer = () => {
   return (
@@ -7,7 +9,7 @@ const Footer = () => {
       <div className="footer-grid">
         <div className="footer-column">
           <h4>Contact Info</h4>
-          <p>+1 (123) 456-7890</p>
+          <p>+27 77 447 8258</p>
           <p>contact@wellnessmobilespa.com</p>
           <p>Mon - Sun: 9am - 8pm</p>
         </div>
@@ -15,14 +17,19 @@ const Footer = () => {
           <h4>Quick Links</h4>
           <ul>
             <li><a href="#services">Services</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="#about-us-section">About</a></li>
             <li><a href="#">Privacy Policy</a></li>
           </ul>
         </div>
-        <div className="footer-column">
+        <div className="footer-column footer-column-center">
           <h4>Follow Us</h4>
           <div className="social-icons">
-            {/* Add social icons here */}
+            <a href="https://instagram.com/wellness_mobile_sa" target="_blank" className="social-btn instagram">
+              <img src={instagramIcon} alt="Instagram" />
+            </a>
+            <a href="https://wa.me/0774478258" target="_blank" className="social-btn whatsapp">
+              <img src={whatsappIcon} alt="WhatsApp" />
+            </a>
           </div>
         </div>
       </div>
