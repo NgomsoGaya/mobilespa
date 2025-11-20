@@ -23,10 +23,10 @@ const Navbar = () => {
           <img src={logo} alt="The Serene Touch" className="navbar-logo" />
         </a>
         <div className={`navbar-links ${isMenuOpen ? 'open' : ''}`}>
-          <a href="#" onClick={handleLinkClick}>About Us</a>
+          <a href="#about-us-section" onClick={handleLinkClick}>About Us</a>
           <a href="#services" onClick={handleLinkClick}>Services</a>
-          <a href="#" onClick={handleLinkClick}>Price List</a>
-          <a href="#" onClick={handleLinkClick}>Vouchers</a>
+          <a href="#price-list-section" onClick={handleLinkClick}>Price List</a>
+          <a href="#vouchers-section" onClick={handleLinkClick}>Vouchers</a>
           <a href="#cta-section" onClick={handleLinkClick}>How to book</a>
           <a href="#how-it-works" onClick={handleLinkClick}>How It Works</a>
         </div>

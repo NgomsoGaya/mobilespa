@@ -17,3 +17,34 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair Display', serif;
 }
+.social-stack {
+  position: fixed;
+  top: 80%;          /* Centers it vertically */
+  right: 0px;       /* Stick to the right side */
+  transform: translateY(-50%);
+  z-index: 9999;     /* Ensures it sits on top of images */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;         /* Space between the circles */
+}
+
+.social-btn {
+  width: 55px;       /* Size of the circle */
+  height: 55px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* The drop shadow */
+  transition: transform 0.3s ease;
+}
+
+.social-btn:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+.social-btn img {
+  width: 28px;       /* Size of the icon inside */
+  height: 28px;
+}
