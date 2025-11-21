@@ -34,7 +34,7 @@ const VouchersSection = () => {
                   <InputField label="Recipient's Email" type="email" placeholder="Enter recipient's email" />
                   <InputField label="Amount" type="number" placeholder="Enter amount" />
                   <InputField label="Personal Message" type="textarea" placeholder="Enter a personal message" />
-                  <Button type="primary" onClick={() => alert('Voucher purchased!')}>Purchase Now</Button>
+                  <Button type="primary" onClick={() => alert('Voucher purchased!')}>Purchase via Whatsapp</Button>
                 </form>
               </div>
             ) : (
@@ -42,7 +42,7 @@ const VouchersSection = () => {
                 <h3>Redeem a Voucher</h3>
                 <form className="voucher-form">
                   <InputField label="Voucher Code" type="text" placeholder="Enter your voucher code" />
-                  <Button type="primary" onClick={() => alert('Voucher redeemed!')}>Redeem Now</Button>
+                  <Button type="primary" onClick={() => alert('Voucher redeemed!')}>Redeem via Whatsapp</Button>
                 </form>
               </div>
             )}

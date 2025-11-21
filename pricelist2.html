@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Wellness Mobile Spa - Brochure & Price List</title>
+    <style>
+        /* General Body and Print Setup */
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        /* Container for the whole brochure - simulating a booklet layout */
+        .brochure-container {
+            width: 100%;
+            max-width: 1000px; /* Max width for a clean look on screen */
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Page styling for print */
+        .page {
+            box-sizing: border-box;
+            padding: 40px 60px;
+            /* Add a page break to force the price list onto a new page when printing */
+            page-break-after: always;
+            min-height: 95vh; /* Ensure content fills a screen/page height */
+        }
+
+        .page:last-child {
+            page-break-after: avoid;
+        }
+
+        /* --- Front Page Styling --- */
+        .front-page {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f7f3f0; /* Light, calming background */
+        }
+
+        .front-page-image {
+            width: 100%;
+            height: 400px;
+            background-image: url("/src/assets/images/brochureimg.png"); /* Placeholder image */
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        h1.main-title {
+            color: #8C6A5A;
+            font-size: 3em;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+        }
+        
+        .slogan {
+            color: #D0A88F;
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .contact-info {
+            margin-top: 40px;
+            border-top: 2px solid #D0A88F;
+            padding-top: 20px;
+            font-size: 1.1em;
+        }
+        .contact-info p {
+            margin: 5px 0;
+        }
+        .contact-info a {
+            color: #8C6A5A;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* --- Price List Page Styling --- */
+        .price-list-page {
+            background-color: #fff;
+        }
+
+        h2 {
+            color: #8C6A5A;
+            border-bottom: 3px solid #D0A88F;
+            padding-bottom: 5px;
+            margin-top: 35px;
+            font-size: 1.8em;
+        }
+
+        .service-category {
+            margin-bottom: 30px;
+        }
+
+        .service-category h3 {
+            color: #4A3E38;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            border-left: 5px solid #D0A88F;
+            padding-left: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px 10px;
+            border-bottom: 1px dotted #ccc;
+        }
+
+        th {
+            background-color: #F0F0F0;
+            font-weight: bold;
+            color: #555;
+            border-bottom: 2px solid #D0A88F;
+        }
+
+        .price-col {
+            text-align: right;
+            font-weight: bold;
+            color: #8C6A5A;
+            width: 120px;
+        }
+        .duration-col {
+             width: 100px;
+             text-align: right;
+        }
+        
+        /* Specific Styles for Packages & Etiquette */
+        .package-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dotted #ccc;
+            padding: 10px 0;
+        }
+        .package-details {
+            flex-grow: 1;
+        }
+        .package-details strong {
+            display: block;
+            font-size: 1.1em;
+            color: #4A3E38;
+            margin-bottom: 5px;
+        }
+        .package-price {
+            font-weight: bold;
+            color: #8C6A5A;
+            font-size: 1.2em;
+            padding-left: 20px;
+        }
+
+        .etiquette {
+            margin-top: 40px;
+            border: 1px solid #D0A88F;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fcf8f6;
+        }
+        .etiquette h3 {
+            border-left: none;
+            padding-left: 0;
+            border-bottom: 1px solid #D0A88F;
+            margin-top: 0;
+        }
+        .etiquette ul {
+            list-style-type: square;
+            margin-left: 20px;
+            padding-left: 0;
+        }
+
+        /* Print-specific CSS */
+        @media print {
+            .brochure-container {
+                box-shadow: none;
+                max-width: none;
+            }
+            .page {
+                border: none;
+                margin: 0;
+                padding: 15mm 15mm; /* Using physical units for print */
+                min-height: 277mm; /* A4 height approx */
+            }
+            .front-page-image {
+                 /* Adjust background image for print quality/visibility */
+                 height: 200px;
+            }
+            /* Hide URL in print if desired */
+            a[href]:after {
+                content: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="brochure-container">
+
+    <div class="page front-page">
+        <div class="front-page-image">
+            </div>
+
+        <h1 class="main-title">Your Wellness Mobile Spa</h1>
+        <p class="slogan">Bringing Tranquility and Beauty to Your Doorstep</p>
+        <p>A convenient and luxurious spa experience in the comfort of your own home, office, or hotel.</p>
+        
+        <div class="contact-info">
+            <p><strong>Contact Us:</strong></p>
+            <p>WhatsApp: <a href="tel:+27774478258">+27 77 447-8258</a></p>
+            <p>Website: <a href="https://www.yourwellnessmobilespa.com">www.yourwellnessmobilespa.com</a> (Insert actual link)</p>
+            <p>Follow us on Social Media for Specials!</p>
+            <p style="font-size: 0.9em; margin-top: 15px;">
+                (Instagram, Facebook, and TikTok logos)
+            </p>
+        </div>
+    </div>
+    
+    <div class="page price-list-page">
+        <h1 style="text-align: center; color: #8C6A5A;">Service Menu & Price List</h1>
+        
+        <div class="service-category">
+            <h2>💆‍♀️ Massage Therapy</h2>
+            <table>
+                <tr>
+                    <th>Treatment</th>
+                    <th class="duration-col">Duration</th>
+                    <th class="price-col">Price (R)</th>
+                </tr>
+                <tr>
+                    <td>Full Body Massage</td>
+                    <td class="duration-col">60min / 90min</td>
+                    <td class="price-col">800 / 1000</td>
+                </tr>
+                <tr>
+                    <td>Couples Massage</td>
+                    <td class="duration-col">60min / 90min</td>
+                    <td class="price-col">1700 / 2100</td>
+                </tr>
+                <tr>
+                    <td>Lymph Drainage</td>
+                    <td class="duration-col">75min / 90min</td>
+                    <td class="price-col">850 / 1000</td>
+                </tr>
+                <tr>
+                    <td>Pregnancy Massage</td>
+                    <td class="duration-col">60min / 90min</td>
+                    <td class="price-col">850 / 1000</td>
+                </tr>
+                <tr>
+                    <td>Wood Therapy Massage</td>
+                    <td class="duration-col">75min / 90min</td>
+                    <td class="price-col">1050 / 1350</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="service-category">
+            <h2>✨ Skincare and Spa Beauty Therapy</h2>
+            <table>
+                <tr>
+                    <th>Treatment</th>
+                    <th class="duration-col">Duration</th>
+                    <th class="price-col">Price (R)</th>
+                </tr>
+                <tr>
+                    <td>Express Facial</td>
+                    <td class="duration-col">30min</td>
+                    <td class="price-col">550</td>
+                </tr>
+                <tr>
+                    <td>Hydrating Facial</td>
+                    <td class="duration-col">60min</td>
+                    <td class="price-col">800</td>
+                </tr>
+                <tr>
+                    <td>Brow Shape & Tint</td>
+                    <td class="duration-col">-</td>
+                    <td class="price-col">200</td>
+                </tr>
+                <tr>
+                    <td>Tint Lash and Brow</td>
+                    <td class="duration-col">20min</td>
+                    <td class="price-col">220</td>
+                </tr>
+                <tr>
+                    <td>Tint Lashes</td>
+                    <td class="duration-col">20min</td>
+                    <td class="price-col">150</td>
+                </tr>
+                <tr>
+                    <td>Tint Brows</td>
+                    <td class="duration-col">15min</td>
+                    <td class="price-col">100</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="service-category">
+            <h2>💅 Hand and Foot Care</h2>
+            <p style="font-style: italic; font-size: 0.9em;">(Deluxe includes scrub & massage)</p>
+            <table>
+                <tr>
+                    <th>Treatment</th>
+                    <th class="duration-col">Duration</th>
+                    <th class="price-col">Price (R)</th>
+                </tr>
+                <tr>
+                    <td>Express Mani or Pedi</td>
+                    <td class="duration-col">-</td>
+                    <td class="price-col">400 / 450</td>
+                </tr>
+                <tr>
+                    <td>Deluxe Spa Mani or Deluxe Spa Pedi</td>
+                    <td class="duration-col">-</td>
+                    <td class="price-col">600 / 650</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="service-category">
+            <h2>🦵 Waxing</h2>
+            <table>
+                <tr>
+                    <th>Treatment</th>
+                    <th class="duration-col">Duration</th>
+                    <th class="price-col">Price (R)</th>
+                </tr>
+                <tr>
+                    <td>Lip / Chin / Brow</td>
+                    <td class="duration-col">15min</td>
+                    <td class="price-col">120</td>
+                </tr>
+                <tr>
+                    <td>Underarm / Sides of Face</td>
+                    <td class="duration-col">20min</td>
+                    <td class="price-col">150</td>
+                </tr>
+                <tr>
+                    <td>Full Face</td>
+                    <td class="duration-col">20min</td>
+                    <td class="price-col">300</td>
+                </tr>
+                <tr>
+                    <td>Bikini Line / Half Arm</td>
+                    <td class="duration-col">25min</td>
+                    <td class="price-col">250</td>
+                </tr>
+                <tr>
+                    <td>Brazilian / Hollywood</td>
+                    <td class="duration-col">30min</td>
+                    <td class="price-col">400 / 500</td>
+                </tr>
+                <tr>
+                    <td>Half Leg / Full Arm / Half Chest</td>
+                    <td class="duration-col">30min</td>
+                    <td class="price-col">300</td>
+                </tr>
+                <tr>
+                    <td>Full Leg</td>
+                    <td class="duration-col">45min</td>
+                    <td class="price-col">400</td>
+                </tr>
+                <tr>
+                    <td>Back / Chest</td>
+                    <td class="duration-col">45min</td>
+                    <td class="price-col">480</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="service-category">
+            <h2>🎁 Spa Packages</h2>
+            
+            <div class="package-item">
+                <div class="package-details">
+                    <strong>Recharge Me (90min)</strong>
+                    <p>(Pick any 3: 30min Back Massage, Express Facial, Foot Massage, Head Massage, Express Mani OR Express Pedi)</p>
+                </div>
+                <div class="package-price">R1400</div>
+            </div>
+
+            <div class="package-item">
+                <div class="package-details">
+                    <strong>Polish Me (2hr 30min)</strong>
+                    <p>Full body scrub, full body massage, and hydrating facial.</p>
+                </div>
+                <div class="package-price">R1850</div>
+            </div>
+
+            <div class="package-item">
+                <div class="package-details">
+                    <strong>Mommy to Be (90min)</strong>
+                    <p>60min Pregnancy Massage and Express Facial</p>
+                </div>
+                <div class="package-price">R1300</div>
+            </div>
+        </div>
+
+        <div class="service-category">
+            <h3>+ Enhancements</h3>
+            <table>
+                <tr>
+                    <th>Treatment</th>
+                    <th class="duration-col">Duration</th>
+                    <th class="price-col">Price (R)</th>
+                </tr>
+                <tr>
+                    <td>Back Massage</td>
+                    <td class="duration-col">30min / 45min</td>
+                    <td class="price-col">500 / 600</td>
+                </tr>
+                <tr>
+                    <td>Foot Massage</td>
+                    <td class="duration-col">30min</td>
+                    <td class="price-col">500</td>
+                </tr>
+                <tr>
+                    <td>Head Massage</td>
+                    <td class="duration-col">30min</td>
+                    <td class="price-col">500</td>
+                </tr>
+                <tr>
+                    <td>Full Body Scrub</td>
+                    <td class="duration-col">30min</td>
+                    <td class="price-col">450</td>
+                </tr>
+                <tr>
+                    <td>Back Scrub</td>
+                    <td class="duration-col">15min</td>
+                    <td class="price-col">300</td>
+                </tr>
+                 <tr>
+                    <td>Wood Therapy (Tummy/Thighs)</td>
+                    <td class="duration-col">-</td>
+                    <td class="price-col">500</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="etiquette">
+            <h3>Spa Etiquette & Policy</h3>
+            <ul>
+                <li>Booking in advance is **highly recommended**.</li>
+                <li>The **minimum treatment value** per Spa Therapist is **R800**.</li>
+                <li>Please advise us of any health conditions, allergies, injuries, or recent medical/cosmetic procedures.</li>
+                <li>To confirm your booking, **50% of the treatment payment is required**.</li>
+                <li>Please be ready **15 minutes** prior to your booking time.</li>
+                <li>A **call out fee** may be added depending on your location.</li>
+            </ul>
+            <p style="font-weight: bold; margin-top: 15px;">Cancellation Policy:</p>
+            <p>24-hour advance notice is required for cancellation and rescheduling. If this is not adhered to, **50% of the treatment will be charged**. Late arrivals will result in a reduction of treatment time whilst the full treatment fee will apply.</p>
+        </div>
+        
+    </div>
+</div>
+
+</body>
+</html>

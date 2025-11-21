@@ -10,7 +10,7 @@ const ServiceCard = ({ icon, title, description, price, serviceId }) => {
       {/* <p className="service-description">{description}</p> */}
       {/* <div className="service-price">Starting From: {price}</div> */}
       <br />
-      <Button type="primary" href={`#${serviceId}`}>Learn More</Button>
+      <Button type="primary" href='#price-list-section'>Learn More</Button>
     </div>
   );
 };
