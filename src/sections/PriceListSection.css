@@ -71,7 +71,8 @@
   border: 1px solid rgba(255, 255, 255, 0.4);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Slightly more pronounced for cards */
   border-radius: 16px; /* Rounded corners as per spec */
-  padding: 2rem; /* Padding as per spec */
+  padding: 1rem; /* Padding as per spec */
+  min-width: 100%;
   transition: all 0.3s ease; /* Smooth transition for hover effects */
 }
 

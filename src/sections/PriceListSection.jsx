@@ -6,11 +6,11 @@ const services = [
   {
     category: 'Massage Therapy',
     items: [
-      { id: 'full-body-massage', name: 'Full Body Massage', duration: '60/90 min', price: 'R800/1000' },
-      { id: 'couples-massage', name: 'Couples Massage', duration: '60/90 min', price: 'R1700/2100' },
-      { id: 'lymph-drainage', name: 'Lymph Drainage', duration: '75/90 min', price: 'R850/1000' },
-      { id: 'pregnancy-massage', name: 'Pregnancy Massage', duration: '60/90 min', price: 'R850/1000' },
-      { id: 'wood-therapy-massage', name: 'Wood Therapy Massage', duration: '75/90 min', price: 'R1050/1350' },
+      { id: 'full-body-massage', name: 'Full Body Massage', duration: '60/90 min', price: 'R800/ 1000' },
+      { id: 'couples-massage', name: 'Couples Massage', duration: '60/90 min', price: 'R1700/ 2100' },
+      { id: 'lymph-drainage', name: 'Lymph Drainage', duration: '75/90 min', price: 'R850/ 1000' },
+      { id: 'pregnancy-massage', name: 'Pregnancy Massage', duration: '60/90 min', price: 'R850/ 1000' },
+      { id: 'wood-therapy-massage', name: 'Wood Therapy Massage', duration: '75/90 min', price: 'R1050/ 1350' },
     ],
   },
   {
@@ -38,15 +38,15 @@ const services = [
   {
     category: 'Waxing',
     items: [
-      { id: 'lip-chin-brow-wax', name: 'Lip/Chin/Brow', duration: '15 min', price: 'R120' },
-      { id: 'underarm-sides-wax', name: 'Underarm/Sides of Face', duration: '20 min', price: 'R150' },
+      { id: 'lip-chin-brow-wax', name: 'Lip/ Chin/ Brow', duration: '15 min', price: 'R120' },
+      { id: 'underarm-sides-wax', name: 'Underarm/ Sides of Face', duration: '20 min', price: 'R150' },
       { id: 'full-face-wax', name: 'Full Face', duration: '20 min', price: 'R300' },
-      { id: 'bikini-half-arm-wax', name: 'Bikini Line/Half Arm', duration: '25 min', price: 'R250' },
+      { id: 'bikini-half-arm-wax', name: 'Bikini Line/ Half Arm', duration: '25 min', price: 'R250' },
       { id: 'brazilian-wax', name: 'Brazilian', duration: '30 min', price: 'R400' },
       { id: 'hollywood-wax', name: 'Hollywood', duration: '30 min', price: 'R500' },
-      { id: 'half-leg-full-arm-half-chest', name: 'Half Leg/Full Arm/Half Chest', duration: '30 min', price: 'R300' },
+      { id: 'half-leg-full-arm-half-chest', name: 'Half Leg/ Full Arm/ Half Chest', duration: '30 min', price: 'R300' },
       { id: 'full-leg-wax', name: 'Full Leg', duration: '45 min', price: 'R400' },
-      { id: 'back-chest-wax', name: 'Back/Chest', duration: '45 min', price: 'R480' },
+      { id: 'back-chest-wax', name: 'Back/ Chest', duration: '45 min', price: 'R480' },
     ],
   },
   {
@@ -60,12 +60,12 @@ const services = [
   {
     category: 'Enhancements',
     items: [
-      { id: 'back-massage-enhancement', name: 'Back Massage', duration: '30/45 min', price: 'R500/600' },
+      { id: 'back-massage-enhancement', name: 'Back Massage', duration: '30/45 min', price: 'R500/ 600' },
       { id: 'foot-massage-enhancement', name: 'Foot Massage', duration: '30 min', price: 'R500' },
       { id: 'head-massage-enhancement', name: 'Head Massage', duration: '30 min', price: 'R500' },
-      { id: 'full-body-scrub-enhancement', name: 'Full Body Scrub', duration: '30 min', price: 'R450' },
+      { id: 'full-body-scrub-enhancement', name: 'FullBody Scrub', duration: '30 min', price: 'R450' },
       { id: 'back-scrub-enhancement', name: 'Back Scrub', duration: '15 min', price: 'R300' },
-      { id: 'woodtherapy-enhancement', name: 'Woodtherapy (Tummy/Thighs)', duration: '', price: 'R500' },
+      { id: 'woodtherapy-enhancement', name: 'Woodtherapy  (Tummy/Thighs)', duration: '', price: 'R500' },
     ],
   },
 ];
