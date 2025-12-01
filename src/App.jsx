@@ -54,7 +54,10 @@ function App() {
       <main>
         <HeroSection />
         <ServicesSection />
-        <CTASection onBookNowClick={() => openSheet('How To Book', HowToBookContent, selectedServices)} />
+        <CTASection
+          selectedServices={selectedServices}
+          onBookNowClick={() => openSheet('How To Book', HowToBookContent, selectedServices)}
+        />
         <PriceListSection onAddService={handleAddService} />
           <VouchersSection />
           <HowToBook />
