@@ -1,0 +1,82 @@
+/* Container: Covers whole screen, handles z-index */
+#bottom-sheet-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999; /* Must be highest */
+  pointer-events: none; /* Let clicks pass through when hidden */
+  display: flex;
+  align-items: flex-end; /* Aligns sheet to bottom */
+}
+
+/* State: Open */
+#bottom-sheet-container.sheet-visible {
+  pointer-events: auto; /* Capture clicks when open */
+}
+
+/* The Backdrop */
+.sheet-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#bottom-sheet-container.sheet-visible .sheet-backdrop {
+  opacity: 1;
+}
+
+/* The Sheet Card */
+.sheet-content {
+  position: relative;
+  width: 100%;
+  max-height: 85vh; /* Don't cover the very top, looks better */
+  background: white;
+  border-radius: 20px 20px 0 0; /* Rounded top corners */
+  transform: translateY(100%); /* Start pushed down off-screen */
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); /* Nice "snap" effect */
+  overflow-y: auto; /* Internal scrolling if content is long */
+  padding-bottom: calc(env(safe-area-inset-bottom, 40px) + 40px); /* Safe area for iPhone home bar */
+}
+
+#bottom-sheet-container.sheet-visible .sheet-content {
+  transform: translateY(0); /* Slide up to natural position */
+}
+
+.sheet-handle-area {
+  padding: 1rem;
+  cursor: grab;
+  display: flex;
+  justify-content: center;
+}
+
+.sheet-handle-bar {
+  width: 40px;
+  height: 5px;
+  background-color: #ccc;
+  border-radius: 2.5px;
+}
+
+.sheet-body {
+  padding: 0 1rem 1rem;
+}
+
+.sheet-body .sheet-title {
+  font-size: var(--h2-size-desktop);
+  margin-bottom: 2rem;
+  color: #000000;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .sheet-body .sheet-title {
+    font-size: var(--h2-size-mobile);
+  }
+}
+

@@ -1,0 +1,153 @@
+.price-list-content-wrapper {
+  text-align: center;
+}
+
+.price-list-content-wrapper .section-subtitle {
+  font-size: var(--body-size-desktop);
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.price-list-content-wrapper .button {
+  display: inline-block;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  transition: background-color 0.3s ease;
+}
+
+.price-list-content-wrapper .button:hover {
+  background-color: var(--color-accent);
+}
+
+.mini-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.mini-nav-button {
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mini-nav-button:hover {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+}
+
+.mini-nav-button.active {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+}
+
+.price-list-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.price-category {
+  background-color: rgba(255, 255, 255, 0.3); /* Increased opacity for more frosted look */
+  backdrop-filter: blur(20px); /* Increased blur for more glassy effect */
+  -webkit-backdrop-filter: blur(20px); /* For Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Slightly more pronounced for cards */
+  border-radius: 16px; /* Rounded corners as per spec */
+  padding: 1rem; /* Padding as per spec */
+  min-width: 100%;
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.price-category h3 {
+  font-size: var(--h3-size-desktop);
+  color: #000000;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-accent);
+  padding-bottom: 0.5rem;
+}
+
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.price-table th,
+.price-table td {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--color-accent);
+}
+
+.price-table th {
+  font-weight: 600;
+  color: #000000;
+}
+
+.price-table td {
+  color: #000000;
+}
+
+.price-table tr:last-child td {
+  border-bottom: none;
+}
+
+.add-service-button {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-service-button:hover {
+  background-color: var(--color-accent);
+}
+
+.add-service-button.animate {
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    background-color: var(--color-primary);
+  }
+  50% {
+    transform: scale(1.2);
+    background-color: var(--color-accent);
+  }
+  100% {
+    transform: scale(1);
+    background-color: var(--color-primary);
+  }
+}
+
+@media (max-width: 768px) {
+  .price-list-content-wrapper .section-subtitle {
+    font-size: var(--body-size-mobile);
+  }
+
+  .price-category h3 {
+    font-size: var(--h3-size-mobile);
+  }
+
+  .price-table th,
+  .price-table td {
+    font-size: var(--body-size-mobile);
+  }
+}

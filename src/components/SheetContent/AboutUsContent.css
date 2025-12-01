@@ -1,0 +1,34 @@
+.about-us-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.about-us-text ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+.about-us-text li {
+  font-size: var(--body-size-desktop);
+  margin-bottom: 1rem;
+  position: relative;
+  padding-left: 1.5rem;
+  color: var(--color-charcoal-text);
+}
+
+.about-us-text li::before {
+  content: '✅'; /* Checkmark icon */
+  position: absolute;
+  left: 0;
+  color: var(--color-primary);
+}
+
+.about-us-testimonial {
+  max-width: 500px;
+  margin: 0 auto;
+}

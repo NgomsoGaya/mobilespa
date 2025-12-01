@@ -1,22 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from './components/Layout/Navbar';
 import Footer from './components/Layout/Footer';
 import HeroSection from './sections/HeroSection';
-import ServicesSection from './sections/ServicesSection';
-import HowToBook from './sections/HowToBook';
 import AdvantageSection from './sections/AdvantageSection';
+import CTASection from './sections/CTASection';
 import AboutUsSection from './sections/AboutUsSection';
+import ServicesSection from './sections/ServicesSection';
 import PriceListSection from './sections/PriceListSection';
 import VouchersSection from './sections/VouchersSection';
-import CTASection from './sections/CTASection';
+import HowToBook from './sections/HowToBook';
+import BottomSheet from './components/UI/BottomSheet/BottomSheet';
+import AboutUsContent from './components/SheetContent/AboutUsContent';
+import ServicesContent from './components/SheetContent/ServicesContent';
+import PriceListContent from './components/SheetContent/PriceListContent';
+import VouchersContent from './components/SheetContent/VouchersContent';
+import HowItWorksContent from './components/SheetContent/HowItWorksContent';
+import HowToBookContent from './components/SheetContent/HowToBookContent';
 import './App.css';
 
 function App() {
   const [selectedServices, setSelectedServices] = useState([]);
+  const [sheetContent, setSheetContent] = useState(null); // { title: string, component: React.Component }
+  const triggerRef = useRef(null); // Ref for the element that opened the sheet
+
+  const openSheet = (title, Component, selectedServicesProp = []) => {
+    setSheetContent({ title, Component, selectedServices: selectedServicesProp });
+  };
+  const closeSheet = () => setSheetContent(null);
+
+  useEffect(() => {
+    if (sheetContent) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [sheetContent]);
 
   const handleAddService = (service) => {
     setSelectedServices((prevServices) => {
-      // Prevent adding duplicate services
       if (prevServices.find(s => s.id === service.id)) {
         return prevServices;
       }
@@ -26,17 +47,34 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar
+        openSheet={openSheet}
+        howToBookButtonRef={triggerRef}
+      />
       <main>
         <HeroSection />
         <ServicesSection />
-        <CTASection selectedServices={selectedServices} /> {/* Pass selectedServices */}
-        <PriceListSection onAddService={handleAddService} /> {/* Pass onAddService */}
-        <HowToBook />
-        <VouchersSection />
+        <CTASection onBookNowClick={() => openSheet('How To Book', HowToBookContent, selectedServices)} />
+        <PriceListSection onAddService={handleAddService} />
+          <VouchersSection />
+          <HowToBook />
         <AboutUsSection />
+        <AdvantageSection />
       </main>
       <Footer />
+      <BottomSheet
+        isOpen={!!sheetContent}
+        onClose={closeSheet}
+        title={sheetContent?.title}
+        triggerRef={triggerRef}
+      >
+        {sheetContent?.Component && (
+          <sheetContent.Component
+            onAddService={handleAddService}
+            selectedServices={sheetContent.selectedServices}
+          />
+        )}
+      </BottomSheet>
     </div>
   );
 }

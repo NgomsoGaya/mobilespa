@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import './Navbar.css';
 import logo from '../../assets/images/logo.png';
+import AboutUsContent from '../SheetContent/AboutUsContent';
+import ServicesContent from '../SheetContent/ServicesContent';
+import PriceListContent from '../SheetContent/PriceListContent';
+import VouchersContent from '../SheetContent/VouchersContent';
+import HowItWorksContent from '../SheetContent/HowItWorksContent';
+import HowToBookContent from '../SheetContent/HowToBookContent';
 
-const Navbar = () => {
+const Navbar = ({ openSheet, howToBookButtonRef }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleLinkClick = () => {
+  const handleLinkClick = (e, title, contentComponent) => {
+    e.preventDefault();
+    openSheet(title, contentComponent);
     if (isMenuOpen) {
       toggleMenu();
     }
@@ -23,16 +31,16 @@ const Navbar = () => {
           <img src={logo} alt="The Serene Touch" className="navbar-logo" />
         </a>
         <div className={`navbar-links ${isMenuOpen ? 'open' : ''}`}>
-          <a href="#about-us-section" onClick={handleLinkClick}>About Us</a>
-          <a href="#services" onClick={handleLinkClick}>Services</a>
-          <a href="#price-list-section" onClick={handleLinkClick}>Price List</a>
-          <a href="#vouchers-section" onClick={handleLinkClick}>Vouchers</a>
-          <a href="#cta-section" onClick={handleLinkClick}>How to book</a>
-          <a href="#how-it-works" onClick={handleLinkClick}>How It Works</a>
+          <a href="#" onClick={(e) => handleLinkClick(e, 'About Us', AboutUsContent)}>About Us</a>
+          <a href="#" onClick={(e) => handleLinkClick(e, 'Our Services', ServicesContent)}>Services</a>
+          <a href="#" onClick={(e) => handleLinkClick(e, 'Our Services & Pricing', PriceListContent)}>Price List</a>
+          <a href="#" onClick={(e) => handleLinkClick(e, 'Gift or Redeem a Voucher', VouchersContent)}>Vouchers</a>
+          <a href="#" onClick={(e) => handleLinkClick(e, 'How To Book', HowToBookContent)} ref={howToBookButtonRef}>How to book</a>
+          <a href="#" onClick={(e) => handleLinkClick(e, 'How It Works', HowItWorksContent)}>How It Works</a>
         </div>
       </div>
       <div className="navbar-right">
-        <a href="#cta-section" className="button button-primary">Book Now</a>
+        <a href="#" className="button button-primary" onClick={(e) => handleLinkClick(e, 'How To Book', HowToBookContent)}>Book Now</a>
       </div>
       <div className="navbar-mobile-menu" onClick={toggleMenu}>
         <div className={`hamburger ${isMenuOpen ? 'open' : ''}`}>
@@ -46,3 +54,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

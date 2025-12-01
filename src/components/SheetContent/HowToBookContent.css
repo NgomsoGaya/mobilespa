@@ -1,0 +1,15 @@
+.how-to-book-content-wrapper {
+  text-align: center;
+}
+
+.cta-title {
+  font-size: var(--h2-size-desktop);
+  margin-bottom: 2rem;
+  color: #000000;
+}
+
+@media (max-width: 768px) {
+  .cta-title {
+    font-size: var(--h2-size-mobile);
+  }
+}

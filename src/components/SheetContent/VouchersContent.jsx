@@ -1,0 +1,52 @@
+import React, { useState } from 'react';
+import Button from '../UI/Button';
+import InputField from '../Forms/InputField';
+import './VouchersContent.css';
+import voucherImage from '../../assets/images/couplestherapy.jpg'; // Reusing an existing image
+
+const VouchersContent = () => {
+  const [mode, setMode] = useState('purchase'); // 'purchase' or 'redeem'
+
+  return (
+    <div className="vouchers-content-wrapper">
+      <p className="section-subtitle">
+        Purchase a gift voucher for your loved ones or redeem one you have received.
+      </p>
+      <div className="vouchers-content">
+        <div className="vouchers-image-container">
+          <img src={voucherImage} alt="Gift Voucher" className="vouchers-image" />
+        </div>
+        <div className="vouchers-form-container card">
+          <div className="voucher-toggle">
+            <Button type={mode === 'purchase' ? 'primary' : 'secondary'} onClick={() => setMode('purchase')}>Purchase</Button>
+            <Button type={mode === 'redeem' ? 'primary' : 'secondary'} onClick={() => setMode('redeem')}>Redeem</Button>
+          </div>
+
+          {mode === 'purchase' ? (
+            <div>
+              <h3>Purchase a Voucher</h3>
+              <form className="voucher-form">
+                <InputField label="Your Name" type="text" placeholder="Enter your name" />
+                <InputField label="Recipient's Name" type="text" placeholder="Enter recipient's name" />
+                <InputField label="Recipient's Email" type="email" placeholder="Enter recipient's email" />
+                <InputField label="Amount" type="number" placeholder="Enter amount" />
+                <InputField label="Personal Message" type="textarea" placeholder="Enter a personal message" />
+                <Button type="primary" onClick={() => alert('Voucher purchased!')}>Purchase via Whatsapp</Button>
+              </form>
+            </div>
+          ) : (
+            <div>
+              <h3>Redeem a Voucher</h3>
+              <form className="voucher-form">
+                <InputField label="Voucher Code" type="text" placeholder="Enter your voucher code" />
+                <Button type="primary" onClick={() => alert('Voucher redeemed!')}>Redeem via Whatsapp</Button>
+              </form>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default VouchersContent;
