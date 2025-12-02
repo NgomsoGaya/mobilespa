@@ -8,7 +8,6 @@ import ServicesSection from './sections/ServicesSection';
 import PriceListSection from './sections/PriceListSection';
 import VouchersSection from './sections/VouchersSection';
 import HowItWorksSection from './sections/HowItWorksSection';
-import HowToBookSection from './sections/HowToBookSection';
 import BottomSheet from './components/UI/BottomSheet/BottomSheet';
 import AboutUsContent from './components/SheetContent/AboutUsContent';
 import ServicesContent from './components/SheetContent/ServicesContent';
@@ -60,7 +59,6 @@ function App() {
         />
         <PriceListSection onAddService={handleAddService} />
           <VouchersSection />
-          <HowToBookSection />
           <HowItWorksSection />
         <AboutUsSection />
       </main>

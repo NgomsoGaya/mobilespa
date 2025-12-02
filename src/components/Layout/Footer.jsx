@@ -27,7 +27,7 @@ const Footer = () => {
             <a href="https://instagram.com/wellness_mobile_sa" target="_blank" className="social-btn instagram">
               <img src={instagramIcon} alt="Instagram" />
             </a>
-            <a href="https://wa.me/0774478258" target="_blank" className="social-btn whatsapp">
+            <a href="https://wa.me/+27774478258" target="_blank" className="social-btn whatsapp">
               <img src={whatsappIcon} alt="WhatsApp" />
             </a>
           </div>

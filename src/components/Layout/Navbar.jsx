@@ -56,12 +56,12 @@ const Navbar = ({ openSheet, howToBookButtonRef }) => {
           <a href="#services-section" onClick={(e) => handleLinkClick(e, 'Our Services', ServicesContent, 'services-section')}>Services</a>
           <a href="#price-list-section" onClick={(e) => handleLinkClick(e, 'Our Services & Pricing', PriceListContent, 'price-list-section')}>Price List</a>
           <a href="#vouchers-section" onClick={(e) => handleLinkClick(e, 'Gift or Redeem a Voucher', VouchersContent, 'vouchers-section')}>Vouchers</a>
-          <a href="#how-to-book-section" onClick={(e) => handleLinkClick(e, 'How To Book', HowToBookContent, 'how-to-book-section')} ref={howToBookButtonRef}>How to book</a>
+          <a href="#cta-section" onClick={(e) => handleLinkClick(e, 'How To Book', HowToBookContent, 'cta-section')} ref={howToBookButtonRef}>How to book</a>
           <a href="#how-it-works-section" onClick={(e) => handleLinkClick(e, 'How It Works', HowItWorksContent, 'how-it-works-section')}>How It Works</a>
         </div>
       </div>
       <div className="navbar-right">
-        <a href="#how-to-book-section" className="button button-primary" onClick={(e) => handleLinkClick(e, 'How To Book', HowToBookContent, 'how-to-book-section')}>Book Now</a>
+        <a href="#cta-section" className="button button-primary" onClick={(e) => handleLinkClick(e, 'How To Book', HowToBookContent, 'cta-section')}>Book Now</a>
       </div>
       <div className="navbar-mobile-menu" onClick={toggleMenu}>
         <div className={`hamburger ${isMenuOpen ? 'open' : ''}`}>
