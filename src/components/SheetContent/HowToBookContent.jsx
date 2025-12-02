@@ -20,7 +20,6 @@ const HowToBookContent = ({ selectedServices }) => {
 
   return (
     <div className="how-to-book-content-wrapper">
-      <h2 className="cta-title">How To Book?</h2>
       {selectedServices && selectedServices.length > 0 ? (
         <BookingSelector onContinue={handleContinueBooking} selectedServices={selectedServices} />
       ) : (

@@ -20,7 +20,7 @@ const AboutUsSection = () => {
               Founded on the principle that wellness should be accessible to everyone, we meticulously
               curate each session to ensure a wellness-focused and luxurious escape from the everyday hustle.
               From soothing massages to revitalizing facials, every service is delivered with the
-              highest standards of professionalism and care, using only premium, organic products.
+              highest standards of professionalism and care.
             </p>
             <p>
               Experience the difference of bespoke wellness, tailored to your schedule and preferences.

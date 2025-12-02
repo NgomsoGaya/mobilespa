@@ -84,7 +84,7 @@ const ServicesSection = () => {
   };
 
   return (
-    <section className="services-section" id="services">
+    <section className="services-section" id="services-section">
       <FadeInOnScroll>
         <h2 className="section-title">Our Services</h2>
         {isMobile ? (

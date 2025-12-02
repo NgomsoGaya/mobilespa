@@ -13,6 +13,10 @@ body {
   background-color: var(--color-secondary-bg);
 }
 
+section[id] {
+  scroll-margin-top: 80px; /* Offset for fixed navbar */
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair Display', serif;
 }

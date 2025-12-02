@@ -80,3 +80,37 @@
   }
 }
 
+/* --- DESKTOP OVERRIDE (Screens wider than 1024px) --- */
+@media (min-width: 1024px) {
+  /* Select your existing bottom-sheet class (e.g., .sheet-modal or .section-container) */
+  .sheet-content { /* Targeting the sheet-content class based on earlier observation */
+    /* 1. Reset Positioning: Put it back in the document flow */
+    position: relative !important; 
+    bottom: auto !important;
+    left: auto !important;
+    
+    /* 2. Reset Visibility: Ensure it's always visible, not hidden off-screen */
+    transform: none !important; 
+    opacity: 1 !important;
+    visibility: visible !important;
+    
+    /* 3. Reset Dimensions: Let it take natural height */
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    
+    /* 4. Remove Sheet Styling */
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important; /* Or match site background */
+    z-index: 1 !important; /* Ensure it sits below the header/nav */
+    padding: 60px 0; /* Add standard section padding */
+  }
+
+  /* Hide mobile-specific UI elements */
+  .sheet-backdrop, 
+  .sheet-handle-area, /* Using sheet-handle-area as it contains sheet-handle-bar */
+  .sheet-close-button { /* As observed, no explicit close button, but for completeness if one is added */
+    display: none !important;
+  }
+}

@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import Navbar from './components/Layout/Navbar';
 import Footer from './components/Layout/Footer';
 import HeroSection from './sections/HeroSection';
-import AdvantageSection from './sections/AdvantageSection';
 import CTASection from './sections/CTASection';
 import AboutUsSection from './sections/AboutUsSection';
 import ServicesSection from './sections/ServicesSection';
 import PriceListSection from './sections/PriceListSection';
 import VouchersSection from './sections/VouchersSection';
-import HowToBook from './sections/HowToBook';
+import HowItWorksSection from './sections/HowItWorksSection';
+import HowToBookSection from './sections/HowToBookSection';
 import BottomSheet from './components/UI/BottomSheet/BottomSheet';
 import AboutUsContent from './components/SheetContent/AboutUsContent';
 import ServicesContent from './components/SheetContent/ServicesContent';
@@ -60,9 +60,9 @@ function App() {
         />
         <PriceListSection onAddService={handleAddService} />
           <VouchersSection />
-          <HowToBook />
+          <HowToBookSection />
+          <HowItWorksSection />
         <AboutUsSection />
-        <AdvantageSection />
       </main>
       <Footer />
       <BottomSheet
