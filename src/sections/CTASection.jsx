@@ -5,7 +5,7 @@ import BookingModal from '../components/Forms/Booking/BookingModal';
 import Button from '../components/UI/Button'; // Import Button component
 import './CTASection.css';
 
-const CTASection = ({ selectedServices }) => { // Receive selectedServices as prop
+const CTASection = ({ selectedServices, onRemoveService, onResetBooking }) => { // NEW PROPS
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [bookingDetails, setBookingDetails] = useState(null);
 
@@ -24,7 +24,12 @@ const CTASection = ({ selectedServices }) => { // Receive selectedServices as pr
       <FadeInOnScroll>
         <h2 className="cta-title">How To Book?</h2>
         {selectedServices && selectedServices.length > 0 ? (
-          <BookingSelector onContinue={handleContinueBooking} selectedServices={selectedServices} />
+          <BookingSelector
+            onContinue={handleContinueBooking}
+            selectedServices={selectedServices}
+            onRemoveService={onRemoveService} // NEW PROP
+            onResetBooking={onResetBooking} // NEW PROP
+          />
         ) : (
           <div className="no-services-selected">
             <p>Please select services from our price list to proceed with booking.</p>
@@ -40,6 +45,9 @@ const CTASection = ({ selectedServices }) => { // Receive selectedServices as pr
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           bookingDetails={bookingDetails}
+          selectedServices={selectedServices} // Pass up-to-date services
+          onRemoveService={onRemoveService} // NEW PROP
+          onResetBooking={onResetBooking} // NEW PROP
         />
       )}
     </section>

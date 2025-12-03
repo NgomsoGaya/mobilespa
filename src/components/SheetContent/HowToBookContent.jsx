@@ -4,7 +4,7 @@ import BookingModal from '../Forms/Booking/BookingModal';
 import Button from '../UI/Button';
 import './HowToBookContent.css';
 
-const HowToBookContent = ({ selectedServices }) => {
+const HowToBookContent = ({ selectedServices, onRemoveService }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [bookingDetails, setBookingDetails] = useState(null);
 
@@ -21,7 +21,7 @@ const HowToBookContent = ({ selectedServices }) => {
   return (
     <div className="how-to-book-content-wrapper">
       {selectedServices && selectedServices.length > 0 ? (
-        <BookingSelector onContinue={handleContinueBooking} selectedServices={selectedServices} />
+        <BookingSelector onContinue={handleContinueBooking} selectedServices={selectedServices} onRemoveService={onRemoveService} />
       ) : (
         <div className="no-services-selected">
           <p>Please select services from our price list to proceed with booking.</p>
@@ -36,6 +36,8 @@ const HowToBookContent = ({ selectedServices }) => {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           bookingDetails={bookingDetails}
+          selectedServices={selectedServices} // Pass up-to-date services
+          onRemoveService={onRemoveService} // Pass onRemoveService here
         />
       )}
     </div>

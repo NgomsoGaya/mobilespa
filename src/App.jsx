@@ -44,6 +44,15 @@ function App() {
     });
   };
 
+  const handleRemoveService = (serviceId) => { // NEW FUNCTION
+    setSelectedServices((prevServices) => prevServices.filter(service => service.id !== serviceId));
+  };
+
+  const handleResetBooking = () => { // NEW FUNCTION
+    setSelectedServices([]); // Clear selected services
+    closeSheet(); // Close the modal
+  };
+
   return (
     <div className="App">
       <Navbar
@@ -56,6 +65,8 @@ function App() {
         <CTASection
           selectedServices={selectedServices}
           onBookNowClick={() => openSheet('How To Book', HowToBookContent, selectedServices)}
+          onRemoveService={handleRemoveService}
+          onResetBooking={handleResetBooking}
         />
         <PriceListSection onAddService={handleAddService} />
           <VouchersSection />
@@ -66,13 +77,16 @@ function App() {
       <BottomSheet
         isOpen={!!sheetContent}
         onClose={closeSheet}
+        onResetBooking={handleResetBooking} // Pass down to BottomSheet
         title={sheetContent?.title}
         triggerRef={triggerRef}
       >
         {sheetContent?.Component && (
           <sheetContent.Component
             onAddService={handleAddService}
-            selectedServices={sheetContent.selectedServices}
+            onRemoveService={handleRemoveService}
+            selectedServices={selectedServices} // <--- Pass the current state directly
+            onResetBooking={handleResetBooking} // Pass down to sheet content
           />
         )}
       </BottomSheet>

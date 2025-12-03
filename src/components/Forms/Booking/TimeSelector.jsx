@@ -25,7 +25,7 @@ const TimeSelector = ({ selectedTime, onSelectTime }) => {
   };
 
   const hours = Array.from({ length: 12 }, (_, i) => i + 1); // 1-12
-  const minutes = Array.from({ length: 60 }, (_, i) => i); // 0-59
+  const minutes = [0, 15, 30, 45]; // Only allow 15-minute increments
 
   return (
     <div className="time-selector">

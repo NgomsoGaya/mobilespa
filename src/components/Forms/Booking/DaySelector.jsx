@@ -4,6 +4,9 @@ import 'react-calendar/dist/Calendar.css'; // Default react-calendar styles
 import './DaySelector.css';
 
 const DaySelector = ({ availableDays, selectedDay, onSelectDay }) => {
+  const today = new Date();
+  const maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30); // 30 days from today
+
   // Filter out times from availableDays for comparison with selectedDay
   const availableDates = availableDays.map(date => new Date(date.getFullYear(), date.getMonth(), date.getDate()));
 
@@ -26,7 +29,8 @@ const DaySelector = ({ availableDays, selectedDay, onSelectDay }) => {
       <Calendar
         onChange={onSelectDay}
         value={selectedDay}
-        minDate={new Date()} // Cannot select past dates
+        minDate={today} // Cannot select past dates
+        maxDate={maxDate} // Cannot select beyond 30 days
         tileDisabled={tileDisabled}
         className="react-calendar-custom" // Custom class for styling
       />

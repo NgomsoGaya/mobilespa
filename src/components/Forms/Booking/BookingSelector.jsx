@@ -4,7 +4,7 @@ import TimeSelector from './TimeSelector';
 import Button from '../../UI/Button';
 import './BookingSelector.css';
 
-const BookingSelector = ({ onContinue, selectedServices }) => {
+const BookingSelector = ({ onContinue, selectedServices, onRemoveService, onResetBooking }) => {
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
 
@@ -31,7 +31,7 @@ const BookingSelector = ({ onContinue, selectedServices }) => {
     // In a real app, this would fetch available days from a backend
     const today = new Date();
     const available = [];
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 30; i++) { // Changed to 30 days
       const date = new Date(today);
       date.setDate(today.getDate() + i);
       available.push(date);
@@ -54,7 +54,15 @@ const BookingSelector = ({ onContinue, selectedServices }) => {
       <h3>Selected Services:</h3>
       <ul className="selected-services-list">
         {selectedServices.map(service => (
-          <li key={service.id}>{service.name} - {service.price}</li>
+          <li key={service.id}>
+            {service.name} - {service.price}
+            <button
+              className="remove-service-button" // Reuse existing styling
+              onClick={() => onRemoveService(service.id)}
+            >
+              -
+            </button>
+          </li>
         ))}
       </ul>
       <h3>Select Your Booking Details</h3>
