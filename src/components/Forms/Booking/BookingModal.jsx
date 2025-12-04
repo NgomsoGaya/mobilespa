@@ -80,7 +80,7 @@ const BookingModal = ({ isOpen, onClose, bookingDetails, onRemoveService, onRese
     if (!validateStep2()) { // Validation for step 2
       return;
     }
-    const { selectedDay, selectedTime } = bookingDetails; // bookingDetails still used for day/time
+    const { selectedDay } = bookingDetails; // selectedTime removed from destructuring
 
     // Helper to parse duration string to minutes
     const parseDuration = (durationStr) => {
@@ -131,7 +131,8 @@ Client: ${customerDetails.name} (${customerDetails.email}) (${customerDetails.ph
 Services: ${servicesList}
 Total Duration: ${totalBookingDuration} minutes
 Total Cost: R${totalBookingCost.toFixed(2)}
-Date/Time: ${selectedDay?.toISOString().split('T')[0]} @ ${selectedTime}
+Date: ${selectedDay?.toISOString().split('T')[0]}
+Time: To be confirmed via WhatsApp.
 Location: ${customerDetails.address}
     `;
 
@@ -150,7 +151,7 @@ Location: ${customerDetails.address}
           <div className="modal-step-1">
             <h3>Booking Summary</h3>
             <p><strong>Date:</strong> {bookingDetails.selectedDay?.toDateString()}</p>
-            <p><strong>Time:</strong> {bookingDetails.selectedTime}</p>
+            <p><strong>Time:</strong> To be confirmed via WhatsApp.</p>
             <p><strong>Services:</strong></p>
             <ul className="modal-services-list">
               {selectedServices.map(service => ( // Use selectedServices prop

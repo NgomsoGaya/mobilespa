@@ -1,13 +1,14 @@
 .services-section {
   padding: 4rem 2rem;
   background-color: var(--color-secondary-bg);
-  text-align: center;
+  /* text-align: center; // Removed */
 }
 
 .section-title {
   font-size: var(--h2-size-desktop);
   color: #000000;
   margin-bottom: 3rem;
+  text-align: center; /* Ensure header is centered */
 }
 
 .services-grid {

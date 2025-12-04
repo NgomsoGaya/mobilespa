@@ -24,3 +24,16 @@
   background-color: var(--color-text-secondary);
   cursor: not-allowed;
 }
+
+.booking-selector .selected-services-list {
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .booking-selector {
+    max-width: none; /* Remove max-width on mobile */
+    width: auto; /* Allow natural width */
+    padding: 1rem; /* Adjust padding for mobile */
+    margin: 1rem; /* Adjust margin for mobile */
+  }
+}

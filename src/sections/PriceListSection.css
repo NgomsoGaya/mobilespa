@@ -1,7 +1,7 @@
 .price-list-section {
   padding: 4rem 2rem;
   background-color: var(--color-secondary-bg);
-  text-align: center;
+  text-align: left; /* Explicitly left-align the section content */
 }
 
 .price-list-section .section-title {
@@ -13,6 +13,7 @@
   font-size: var(--body-size-desktop);
   color: #000000;
   margin-bottom: 1rem;
+  text-align: center; // Ensure subtitle is centered
 }
 
 .price-list-section .button {

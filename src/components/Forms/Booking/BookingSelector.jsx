@@ -1,53 +1,42 @@
 import React, { useState } from 'react';
 import DaySelector from './DaySelector';
-import TimeSelector from './TimeSelector';
+// import TimeSelector from './TimeSelector'; // Removed
 import Button from '../../UI/Button';
 import './BookingSelector.css';
 
 const BookingSelector = ({ onContinue, selectedServices, onRemoveService, onResetBooking }) => {
   const [selectedDay, setSelectedDay] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
+  // const [selectedTime, setSelectedTime] = useState(null); // Removed
 
   const handleDaySelect = (day) => {
     setSelectedDay(day);
-    setSelectedTime(null); // Reset time if day changes
+    // setSelectedTime(null); // Removed
   };
 
-  const handleTimeSelect = (time) => {
-    setSelectedTime(time);
-  };
+  // const handleTimeSelect = (time) => { // Removed
+  //   setSelectedTime(time);
+  // };
 
   const handleContinueClick = () => {
-    if (selectedDay && selectedTime) {
+    if (selectedDay) { // Modified: only check selectedDay
       // Assuming a default location since location selection is removed
       const selectedLocation = { id: 'mobile', name: 'Mobile Service (Your Home)' };
-      onContinue({ selectedLocation, selectedDay, selectedTime });
+      // Pass a default or null for selectedTime, as it's no longer selected
+      onContinue({ selectedLocation, selectedDay, selectedTime: 'No specific time chosen' }); // Modified
     } else {
-      alert('Please select a day and time.');
+      alert('Please select a day.'); // Modified
     }
   };
 
-  const getAvailableDays = () => {
-    // In a real app, this would fetch available days from a backend
-    const today = new Date();
-    const available = [];
-    for (let i = 0; i < 30; i++) { // Changed to 30 days
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      available.push(date);
-    }
-    return available;
-  };
-
-  const getAvailableTimes = (day) => {
-    // In a real app, this would fetch available times from a backend based on day
-    if (!day) return [];
-    const times = ['9:00 AM', '10:30 AM', '12:00 PM', '2:00 PM', '3:30 PM', '5:00 PM'];
-    return times;
-  };
+  // const getAvailableTimes = (day) => { // Removed
+  //   // In a real app, this would fetch available times from a backend based on day
+  //   if (!day) return [];
+  //   const times = ['9:00 AM', '10:30 AM', '12:00 PM', '2:00 PM', '3:30 PM', '5:00 PM'];
+  //   return times;
+  // };
 
   const availableDays = getAvailableDays();
-  const availableTimes = getAvailableTimes(selectedDay);
+  // const availableTimes = getAvailableTimes(selectedDay); // Removed
 
   return (
     <div className="booking-selector card">
@@ -71,23 +60,30 @@ const BookingSelector = ({ onContinue, selectedServices, onRemoveService, onRese
         selectedDay={selectedDay}
         onSelectDay={handleDaySelect}
       />
-      {selectedDay && (
-        <TimeSelector
-          availableTimes={availableTimes}
-          selectedTime={selectedTime}
-          onSelectTime={handleTimeSelect}
-        />
-      )}
+      {/* Removed TimeSelector block */}
       <Button
         type="primary"
         size="large"
         onClick={handleContinueClick}
-        disabled={!selectedDay || !selectedTime}
+        disabled={!selectedDay} // Modified
       >
         Book via Whatsapp
       </Button>
     </div>
   );
 };
+
+// Moved getAvailableDays outside to avoid recreation on every render
+const getAvailableDays = () => {
+  const today = new Date();
+  const available = [];
+  for (let i = 0; i < 30; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    available.push(date);
+  }
+  return available;
+};
+
 
 export default BookingSelector;

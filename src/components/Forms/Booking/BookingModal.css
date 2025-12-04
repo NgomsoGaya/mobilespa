@@ -61,6 +61,14 @@
   text-align: left; /* Ensure left alignment */
 }
 
+.modal-services-list li {
+  text-align: left; /* Ensure list items are left aligned */
+  display: flex; /* Allow content and button to align */
+  justify-content: space-between; /* Push button to the right */
+  align-items: center; /* Vertically align content */
+}
+
+
 .modal-step-1 .button.primary,
 .modal-step-2 .button.primary {
   margin-top: 1.5rem;

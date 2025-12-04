@@ -15,7 +15,7 @@
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop_shadow(0 0 2em #61dafbaa);
 }
 
 @keyframes logo-spin {
@@ -39,4 +39,11 @@
 
 .read-the-docs {
   color: #888;
+}
+
+@media (max-width: 1024px) { /* Adjust breakpoint if necessary, using Navbar's 1024px for consistency */
+  #root {
+    max-width: 100%; /* Allow full width on smaller screens */
+    padding: 1rem; /* Adjust padding for mobile */
+  }
 }
