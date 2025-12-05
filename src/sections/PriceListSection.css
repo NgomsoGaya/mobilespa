@@ -159,3 +159,8 @@
     font-size: var(--body-size-mobile);
   }
 }
+
+.pricelist-button-container {
+  text-align: center; /* Center the button */
+  margin-bottom: 2rem; /* Add some space below the button */
+}
