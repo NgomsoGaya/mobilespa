@@ -1,0 +1,97 @@
+.service-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.service-modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+  overflow-y: auto; /* Allow scrolling for long content */
+  max-height: 90vh; /* Max height to prevent overflow */
+}
+
+.service-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.service-modal-body h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.service-modal-body p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: #555;
+  text-align: left; /* Ensure paragraphs are left aligned */
+}
+
+.service-modal-body ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+  color: #555;
+  text-align: left; /* Ensure list is left aligned */
+}
+
+.service-modal-body ul li {
+  margin-bottom: 0.5rem;
+}
+
+.service-modal-body .modal-action-button {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background-color: var(--color-primary); /* Assuming --color-primary is defined globally */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 1.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.service-modal-body .modal-action-button:hover {
+  background-color: var(--color-accent); /* Assuming --color-accent is defined globally */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .service-modal-content {
+    width: 95%;
+    padding: 1rem;
+  }
+  .service-modal-close {
+    font-size: 1.2rem;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+  .service-modal-body h3 {
+    font-size: 1.5rem;
+  }
+  .service-modal-body p,
+  .service-modal-body ul {
+    font-size: 0.9rem;
+  }
+  .service-modal-body .modal-action-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+}

@@ -2,61 +2,16 @@ import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import ServiceCard from './ServiceCard';
 import FadeInOnScroll from '../components/Transitions/FadeInOnScroll';
+import ServiceModal from '../components/ServiceModal'; // NEW IMPORT
 import './ServicesSection.css';
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
-import massageTherapy from '../assets/images/massagetherapy.jpg';
-import facial from '../assets/images/facial.jpg';
-import couplesTherapy from '../assets/images/couplestherapy.jpg';
-import aromatherapy from '../assets/images/aromatherapy.jpg';
-
-const services = [
-  {
-    id: 'massage-therapy', // Matching ID from PriceListSection
-    icon: massageTherapy,
-    title: 'Massage Therapy',
-    description: 'Swedish, Deep Tissue, or Hot Stone to release tension.',
-    price: 'R120',
-  },
-  {
-    id: 'skincare-therapy', // Matching ID from PriceListSection
-    icon: facial,
-    title: 'Skincare Therapy',
-    description: 'Organic facials with gentle expert care.',
-    price: 'R95',
-  },
-  {
-    id: 'hand-foot-care', // Matching ID from PriceListSection
-    icon: couplesTherapy,
-    title: 'Hand & Foot Care',
-    description: 'Side-by-side relaxation treatments.',
-    price: 'R220',
-  },
-  {
-    id: 'waxing-tinting', // Matching ID from PriceListSection
-    icon: aromatherapy,
-    title: 'Waxing & Tinting',
-    description: 'Mind–body balance with essential oils.',
-    price: 'R85',
-  },
-  {
-    id: 'corporate-wellness', // New ID for this service
-    icon: aromatherapy,
-    title: 'Corporate Wellness',
-    description: 'Mind–body balance with essential oils.',
-    price: 'R85',
-  },
-  {
-    id: 'special-occasions-pamper-parties', // New ID for this service
-    icon: aromatherapy,
-    title: 'Special Occasions & Pamper Parties',
-    description: 'Mind–body balance with essential oils.',
-    price: 'R85',
-  },
-];
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import servicesData from '../data/servicesData'; // NEW IMPORT
 
 const ServicesSection = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false); // Keep for Slider conditional
+  const [isModalOpen, setIsModalOpen] = useState(false); // NEW STATE for modal
+  const [selectedService, setSelectedService] = useState(null); // NEW STATE for modal
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 768px)');
@@ -72,6 +27,16 @@ const ServicesSection = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  const handleLearnMoreClick = (service) => { // NEW HANDLER
+    setSelectedService(service);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => { // NEW HANDLER
+    setIsModalOpen(false);
+    setSelectedService(null);
+  };
 
   const settings = {
     dots: true,
@@ -89,32 +54,37 @@ const ServicesSection = () => {
         <h2 className="section-title">Our Services</h2>
         {isMobile ? (
           <Slider {...settings}>
-            {services.map((service, index) => (
+            {servicesData.map((service) => ( // Use servicesData
               <ServiceCard
-                key={index}
+                key={service.id}
                 icon={service.icon}
                 title={service.title}
-                description={service.description}
-                price={service.price}
-                serviceId={service.id} // Pass service.id directly
+                shortDescription={service.shortDescription} // Use shortDescription
+                onLearnMoreClick={() => handleLearnMoreClick(service)} // NEW PROP
               />
             ))}
           </Slider>
         ) : (
           <div className="services-grid">
-            {services.map((service, index) => (
+            {servicesData.map((service) => ( // Use servicesData
               <ServiceCard
-                key={index}
+                key={service.id}
                 icon={service.icon}
                 title={service.title}
-                description={service.description}
-                price={service.price}
-                serviceId={service.id} // Pass service.id directly
+                shortDescription={service.shortDescription} // Use shortDescription
+                onLearnMoreClick={() => handleLearnMoreClick(service)} // NEW PROP
               />
             ))}
           </div>
         )}
       </FadeInOnScroll>
+
+      {/* Render ServiceModal */}
+      <ServiceModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        service={selectedService}
+      />
     </section>
   );
 };
