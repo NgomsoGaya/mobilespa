@@ -15,7 +15,7 @@ const servicesData = [
       action: {
         text: 'View and Download Price List',
         type: 'link',
-        target: '../Brochure&PriceList.pdf'
+        target: '/brochure.pdf'
       }
     }
   },

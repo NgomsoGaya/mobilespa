@@ -92,7 +92,7 @@ const PriceListSection = ({ onAddService }) => {
           Your wellness mobile spa provides an array of finest wellness treatments, each with a specific goal, such as relaxation, invigoration or reducing stress. Kids treatments available on request.
         </p>
         <div className="pricelist-button-container">
-          <a href="/Brochure&PriceList.pdf" className="button" download>View and Download Pricelist</a>
+          <a href="/brochure.pdf" className="button" download>View and Download Pricelist</a>
         </div>
         <div className="mini-nav">
           {services.map((category, index) => (
