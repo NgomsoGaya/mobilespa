@@ -8,14 +8,14 @@ const servicesData = [
     id: 'spa-treatments',
     icon: massageTherapy, // Placeholder, will need to confirm image
     title: 'Spa Treatments',
-    shortDescription: 'Finest wellness treatments: relaxation, invigorating, or reducing stress. Kids\' treatments available.',
+    shortDescription: 'Finest wellness treatments: relaxation, invigorating, or reducing stress. Kid\'s treatments available.',
     modalContent: {
-      description: 'Your wellness Mobile spa provides an array of the finest wellness treatments, each with a specific goal such as relaxation, invigorating, or reducing stress. Kids\' treatments are available on request.',
+      description: 'Your wellness Mobile spa provides an array of the finest wellness treatments, each with a specific goal such as relaxation, invigorating, or reducing stress. Kid\'s treatments are available on request.',
       listItems: ['Massages', 'Pregnancy massages', 'Wood therapy', 'Facials and waxes', 'Hands and foot care'],
       action: {
         text: 'View and Download Price List',
         type: 'link',
-        target: '/YourWellnessMobileSpa-Brochure&PriceList.pdf'
+        target: '/Brochure&PriceList.pdf'
       }
     }
   },
@@ -26,7 +26,7 @@ const servicesData = [
     shortDescription: 'Celebrate with bespoke pamper parties for any event.',
     modalContent: {
       description: 'Make your special day or event unforgettable with our bespoke pamper parties. Perfect for bridal showers, birthdays, corporate events, or just a luxurious get-together with friends.',
-      listItems: ['Bridal showers', 'Birthdays', 'Corporate events', 'Friends\' gatherings'],
+      listItems: ['Bridal showers', 'Birthdays', 'Corporate events', 'Friend\'s gatherings'],
       images: [], // Placeholder for images (Phase 3)
       action: {
         text: 'Contact Us for Details',

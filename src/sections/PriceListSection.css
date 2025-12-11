@@ -13,7 +13,7 @@
   font-size: var(--body-size-desktop);
   color: #000000;
   margin-bottom: 1rem;
-  text-align: center; // Ensure subtitle is centered
+  text-align: center; 
 }
 
 .price-list-section .button {
@@ -43,7 +43,7 @@
 .mini-nav-button {
   background-color: transparent;
   border: 1px solid var(--color-primary);
-  color: var(--color-primary);
+  color: black;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   cursor: pointer;
