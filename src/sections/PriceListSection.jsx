@@ -31,8 +31,11 @@ const services = [
     // but the table structure doesn't support an inline note.
     items: [
       // Manicure/Pedicure prices are separated by a slash (R400/R450)
-      { id: 'express-mani-pedi', name: 'Express Mani or Pedi', duration: '', price: 'R400/R450' },
-      { id: 'delux-spa-mani-pedi', name: 'Delux Spa Mani or Pedi', duration: '', price: 'R600/R650' },
+      { id: 'express-mani-pedi', name: 'Express Mani or Pedi(Nail Polish)', duration: '', price: 'R300/R400' },
+      { id: 'delux-spa-mani-pedi', name: 'Delux Spa Mani or Pedi(Nail Polish)', duration: '', price: 'R400/R500' },
+      { id: 'express-mani-pedi', name: 'Express Mani or Pedi(with Gel)', duration: '', price: 'R400/R450' },
+      { id: 'delux-spa-mani-pedi', name: 'Delux Spa Mani or Pedi(with Gel)', duration: '', price: 'R600/R650' },
+      { id: 'express-mani-pedi', name: 'Mediheel (for dry, cracked feet)', duration: '', price: 'R120' },
     ],
   },
   {
