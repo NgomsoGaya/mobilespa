@@ -1,11 +1,15 @@
 import React from 'react';
 import './InputField.css';
 
-const InputField = ({ label, ...props }) => { // Destructure label, capture rest of props
+const InputField = ({ label, ...props }) => {
   return (
     <div className="input-field">
       <label>{label}</label>
-      <input {...props} /> {/* Spread props to the input element */}
+      {props.type === 'textarea' ? (
+        <textarea {...props} className="input-element" />
+      ) : (
+        <input {...props} className="input-element" />
+      )}
     </div>
   );
 };

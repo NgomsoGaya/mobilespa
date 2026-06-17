@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import './BottomSheet.css';
 
 const BottomSheet = ({ isOpen, onClose, title, children, triggerRef }) => {
@@ -33,7 +34,7 @@ const BottomSheet = ({ isOpen, onClose, title, children, triggerRef }) => {
     return null;
   }
 
-  return (
+  const sheetContent = (
     <div id="bottom-sheet-container" className={isOpen ? 'sheet-visible' : 'sheet-hidden'} aria-hidden={!isOpen}>
       <div className="sheet-backdrop" id="sheet-backdrop" onClick={onClose}></div>
 
@@ -49,6 +50,8 @@ const BottomSheet = ({ isOpen, onClose, title, children, triggerRef }) => {
       </div>
     </div>
   );
+
+  return createPortal(sheetContent, document.body);
 };
 
 export default BottomSheet;

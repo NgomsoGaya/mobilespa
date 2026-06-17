@@ -61,6 +61,7 @@ const ServicesSection = () => {
                 title={service.title}
                 shortDescription={service.shortDescription} // Use shortDescription
                 onLearnMoreClick={() => handleLearnMoreClick(service)} // NEW PROP
+                altText={service.altText}
               />
             ))}
           </Slider>
@@ -73,6 +74,7 @@ const ServicesSection = () => {
                 title={service.title}
                 shortDescription={service.shortDescription} // Use shortDescription
                 onLearnMoreClick={() => handleLearnMoreClick(service)} // NEW PROP
+                altText={service.altText}
               />
             ))}
           </div>

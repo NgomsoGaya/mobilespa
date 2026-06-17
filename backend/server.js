@@ -1,6 +1,6 @@
 /**
  * Wellness Mobile Spa — Voucher Backend
- * Express + SQLite + Yoco Payments + Nodemailer
+ * Express + Supabase + Yoco Payments + Nodemailer
  *
  * Payment confirmation strategy: successUrl polling
  * ─────────────────────────────────────────────────
@@ -18,18 +18,25 @@
 import express from "express";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
-import sqlite3 from "sqlite3";
-import { open } from "sqlite";
 import path from "path";
 import { fileURLToPath } from "url";
 import { v4 as uuidv4 } from "uuid";
 import nodemailer from "nodemailer";
+import { createClient } from "@supabase/supabase-js";
+
 
 // ─── Bootstrap ────────────────────────────────────────────────────────────────
 
 dotenv.config();
 
-const REQUIRED_ENV = ["YOCO_SECRET", "EMAIL_USER", "EMAIL_PASS", "BASE_URL"];
+const REQUIRED_ENV = [
+  "YOCO_SECRET",
+  "EMAIL_USER",
+  "EMAIL_PASS",
+  "BASE_URL",
+  "SUPABASE_URL",
+  "SUPABASE_SERVICE_ROLE_KEY",
+];
 const missingEnv = REQUIRED_ENV.filter((k) => !process.env[k]);
 if (missingEnv.length) {
   console.error(
@@ -42,47 +49,18 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const IS_PROD = process.env.NODE_ENV === "production";
 const PORT = process.env.PORT || 3000;
-
-// BASE_URL is your public-facing URL — add to .env:
-// BASE_URL=https://smooth-satiable-splicing.ngrok-free.dev
 const BASE_URL = process.env.BASE_URL.replace(/\/$/, "");
 
-// ─── Database ─────────────────────────────────────────────────────────────────
+// ─── Supabase client ──────────────────────────────────────────────────────────
+// Use the service-role key so all DB operations bypass Row Level Security.
+// NEVER expose this key to the frontend.
 
-let db;
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY,
+);
 
-async function initDb() {
-  db = await open({
-    filename: path.join(__dirname, "vouchers.db"),
-    driver: sqlite3.Database,
-  });
-
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS vouchers (
-      voucher_id         TEXT PRIMARY KEY,
-      voucher_code       TEXT UNIQUE NOT NULL,
-      purchase_name      TEXT NOT NULL,
-      purchase_email     TEXT NOT NULL,
-      recipient_name     TEXT NOT NULL,
-      recipient_email    TEXT NOT NULL,
-      recipient_phone    TEXT,
-      amount             REAL NOT NULL,
-      currency           TEXT NOT NULL,
-      status             TEXT NOT NULL DEFAULT 'pending',
-      yoco_checkout_id   TEXT,
-      yoco_payment_id    TEXT,
-      created_at         TEXT NOT NULL,
-      paid_at            TEXT,
-      issued_at          TEXT,
-      redeemed_at        TEXT,
-      redeemed_by        TEXT,
-      redemption_channel TEXT,
-      metadata           TEXT
-    );
-  `);
-
-  console.log("[db] Initialised — vouchers table ready.");
-}
+console.log("[db] Supabase client initialised.");
 
 // ─── Voucher helpers ──────────────────────────────────────────────────────────
 
@@ -102,6 +80,7 @@ async function sendVoucherEmail({
   amount,
   currency,
   purchaseName,
+  personalMessage,
 }) {
   const transporter = nodemailer.createTransport({
     service: process.env.EMAIL_SERVICE || "gmail",
@@ -116,22 +95,37 @@ async function sendVoucherEmail({
     to: recipientEmail,
     subject: `Your Wellness Mobile Spa Voucher — gifted by ${purchaseName}`,
     html: `
-      <div style="font-family:sans-serif;max-width:520px;margin:0 auto">
-        <h2 style="color:#4a7c59">You've received a gift voucher! 🌿</h2>
-        <p>Hi there,</p>
-        <p><strong>${purchaseName}</strong> has gifted you a Wellness Mobile Spa voucher.</p>
-        <table style="border-collapse:collapse;width:100%">
-          <tr>
-            <td style="padding:8px;border:1px solid #ddd;background:#f9f9f9"><strong>Voucher Code</strong></td>
-            <td style="padding:8px;border:1px solid #ddd;font-size:1.3em;letter-spacing:2px"><strong>${voucherCode}</strong></td>
-          </tr>
-          <tr>
-            <td style="padding:8px;border:1px solid #ddd;background:#f9f9f9"><strong>Value</strong></td>
-            <td style="padding:8px;border:1px solid #ddd">${currency} ${(amount / 100).toFixed(2)}</td>
-          </tr>
-        </table>
-        <p style="margin-top:20px">To redeem, contact us via WhatsApp or email and quote your voucher code.</p>
-        <p style="color:#888;font-size:0.85em">Thank you for choosing Wellness Mobile Spa.</p>
+      <div style="font-family:sans-serif;max-width:520px;margin:0 auto;border:1px solid #e1e8e1;border-radius:12px;overflow:hidden">
+        <div style="background-color:#4a7c59;padding:24px;text-align:center">
+          <h1 style="color:white;margin:0;font-size:24px">A Gift for You 🌿</h1>
+        </div>
+        <div style="padding:24px;color:#333">
+          <p style="font-size:16px">Hi there,</p>
+          <p style="font-size:16px"><strong>${purchaseName}</strong> has gifted you a Wellness Mobile Spa voucher to enjoy at your convenience.</p>
+          
+          ${
+            personalMessage
+              ? `
+          <div style="background-color:#f4f7f4;padding:16px;border-left:4px solid #4a7c59;margin:20px 0;font-style:italic">
+            "${personalMessage}"
+          </div>
+          `
+              : ""
+          }
+
+          <div style="background-color:#fff;border:2px dashed #4a7c59;padding:20px;text-align:center;margin:24px 0">
+            <p style="margin:0 0 8px 0;color:#666;text-transform:uppercase;font-size:12px;letter-spacing:1px">Your Voucher Code</p>
+            <h2 style="margin:0;color:#4a7c59;font-size:28px;letter-spacing:2px">${voucherCode}</h2>
+            <p style="margin:12px 0 0 0;font-weight:bold;font-size:18px">${currency} ${(amount / 100).toFixed(2)}</p>
+          </div>
+
+          <p style="font-size:14px;line-height:1.5">To redeem your voucher simply visit the website and redeem in the voucher-section, and our team will get back to you.</p>
+          
+          <div style="border-top:1px solid #eee;margin-top:24px;padding-top:20px;color:#888;font-size:12px;text-align:center">
+            <p>Thank you for choosing Wellness Mobile Spa.</p>
+            <p>Cape Town, South Africa</p>
+          </div>
+        </div>
       </div>
     `,
   });
@@ -139,12 +133,60 @@ async function sendVoucherEmail({
   console.log(`[email] Voucher email sent to ${recipientEmail}`);
 }
 
-/**
- * Sends a non-editable notification to the admin when a voucher is redeemed.
- * This ensures the admin is alerted immediately without relying on the client's device.
- */
+async function sendAdminPurchaseNotification({
+  purchaseName,
+  purchaseEmail,
+  recipientName,
+  recipientEmail,
+  voucherCode,
+  amount,
+  currency,
+  personalMessage,
+}) {
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
+  const transporter = nodemailer.createTransport({
+    service: process.env.EMAIL_SERVICE || "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  await transporter.sendMail({
+    from: `"Wellness Mobile Spa" <${process.env.EMAIL_USER}>`,
+    to: adminEmail,
+    subject: `[NEW SALE] Voucher Purchased: ${voucherCode}`,
+    html: `
+      <div style="font-family:sans-serif;max-width:520px;border:2px solid #4a7c59;padding:20px;border-radius:8px">
+        <h2 style="color:#4a7c59;margin-top:0">New Voucher Sale! 💰</h2>
+        <p>A new voucher has been purchased and issued.</p>
+        
+        <div style="background:#f4f7f4;padding:15px;border-radius:4px;margin-bottom:20px">
+          <h3 style="margin-top:0;font-size:14px;color:#4a7c59">PURCHASER</h3>
+          <p style="margin:5px 0"><strong>Name:</strong> ${purchaseName}</p>
+          <p style="margin:5px 0"><strong>Email:</strong> ${purchaseEmail}</p>
+        </div>
+
+        <div style="background:#f4f7f4;padding:15px;border-radius:4px;margin-bottom:20px">
+          <h3 style="margin-top:0;font-size:14px;color:#4a7c59">RECIPIENT</h3>
+          <p style="margin:5px 0"><strong>Name:</strong> ${recipientName}</p>
+          <p style="margin:5px 0"><strong>Email:</strong> ${recipientEmail}</p>
+        </div>
+
+        <div style="background:#f9f9f9;padding:15px;border-radius:4px;border:1px solid #ddd">
+          <p style="margin:5px 0"><strong>Voucher Code:</strong> <code>${voucherCode}</code></p>
+          <p style="margin:5px 0"><strong>Value:</strong> ${currency} ${(amount / 100).toFixed(2)}</p>
+          ${personalMessage ? `<p style="margin:10px 0 0 0;font-style:italic">"${personalMessage}"</p>` : ""}
+        </div>
+      </div>
+    `,
+  });
+  console.log(`[admin-notif] Sale notification sent to ${adminEmail}`);
+}
+
 async function sendAdminNotification({
   redeemerName,
+  redeemerPhone,
   voucherCode,
   amount,
   currency,
@@ -152,7 +194,6 @@ async function sendAdminNotification({
   const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
   const adminPhone = process.env.ADMIN_PHONE_NUMBER;
 
-  // 1. Email Notification (Reliable fallback)
   const transporter = nodemailer.createTransport({
     service: process.env.EMAIL_SERVICE || "gmail",
     auth: {
@@ -171,6 +212,18 @@ async function sendAdminNotification({
         <p>A voucher has just been successfully redeemed via the website.</p>
         <div style="background:#f4f7f4;padding:15px;border-radius:4px">
           <p style="margin:5px 0"><strong>Redeemed By:</strong> ${redeemerName}</p>
+          <p style="margin:5px 0"><strong>Contact Number:</strong> ${redeemerPhone || "Not provided"}</p>
+          ${
+            redeemerPhone
+              ? `
+          <p style="margin:10px 0">
+            <a href="https://wa.me/${redeemerPhone.replace(/\s+/g, "")}" style="background-color:#25D366;color:white;padding:8px 12px;text-decoration:none;border-radius:4px;font-size:14px;display:inline-block">
+              Message on WhatsApp
+            </a>
+          </p>
+          `
+              : ""
+          }
           <p style="margin:5px 0"><strong>Voucher Code:</strong> <span style="font-family:monospace;font-size:1.1em">${voucherCode}</span></p>
           <p style="margin:5px 0"><strong>Value:</strong> ${currency} ${(amount / 100).toFixed(2)}</p>
         </div>
@@ -182,50 +235,48 @@ async function sendAdminNotification({
   });
   console.log(`[admin-notif] Email alert sent to ${adminEmail}`);
 
-  // 2. WhatsApp Notification (via API - Placeholder for Twilio/MessageBird)
   if (adminPhone && process.env.WHATSAPP_API_KEY) {
-  console.log(`[admin-notif] Triggering WhatsApp API for ${adminPhone}...`);
-  // Example: await twilio.messages.create({ body: `Voucher ${voucherCode} redeemed by ${redeemerName}`, from: '...', to: adminPhone });
+    console.log(`[admin-notif] Triggering WhatsApp API for ${adminPhone}...`);
   } else {
-  console.log("[admin-notif] WhatsApp notification skipped (missing config).");
+    console.log(
+      "[admin-notif] WhatsApp notification skipped (missing config).",
+    );
   }
-  }
+}
 
-  /**
-  * Sends an email to the admin when someone fills out the contact form.
-  */
-  async function sendContactEmail({ name, email, message }) {
+async function sendContactEmail({ name, email, message }) {
   const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
 
   const transporter = nodemailer.createTransport({
-  service: process.env.EMAIL_SERVICE || "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
+    service: process.env.EMAIL_SERVICE || "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
   });
 
   await transporter.sendMail({
-  from: `"Wellness Mobile Spa — Contact" <${process.env.EMAIL_USER}>`,
-  to: adminEmail,
-  replyTo: email,
-  subject: `New Message from ${name}`,
-  html: `
-    <div style="font-family:sans-serif;max-width:520px;border:1px solid #ddd;padding:20px;border-radius:8px">
-      <h2 style="color:#4a7c59;margin-top:0">New Website Message 🌿</h2>
-      <p>You have received a new message from the contact form.</p>
-      <div style="background:#f9f9f9;padding:15px;border-radius:4px">
-        <p style="margin:5px 0"><strong>From:</strong> ${name} (${email})</p>
-        <p style="margin:15px 0"><strong>Message:</strong></p>
-        <p style="white-space:pre-wrap;color:#333">${message}</p>
+    from: `"Wellness Mobile Spa — Contact" <${process.env.EMAIL_USER}>`,
+    to: adminEmail,
+    replyTo: email,
+    subject: `New Message from ${name}`,
+    html: `
+      <div style="font-family:sans-serif;max-width:520px;border:1px solid #ddd;padding:20px;border-radius:8px">
+        <h2 style="color:#4a7c59;margin-top:0">New Website Message 🌿</h2>
+        <p>You have received a new message from the contact form.</p>
+        <div style="background:#f9f9f9;padding:15px;border-radius:4px">
+          <p style="margin:5px 0"><strong>From:</strong> ${name} (${email})</p>
+          <p style="margin:15px 0"><strong>Message:</strong></p>
+          <p style="white-space:pre-wrap;color:#333">${message}</p>
+        </div>
       </div>
-    </div>
-  `,
+    `,
   });
   console.log(`[contact-email] Message from ${email} sent to ${adminEmail}`);
-  }
+}
 
-  // ─── Yoco helpers ─────────────────────────────────────────────────────────────
+// ─── Yoco helpers ─────────────────────────────────────────────────────────────
+
 async function createYocoCheckout({
   amount,
   currency,
@@ -252,10 +303,6 @@ async function createYocoCheckout({
   return data;
 }
 
-/**
- * Fetch a checkout's current status directly from Yoco.
- * This is how we verify payment without needing webhook subscriptions.
- */
 async function fetchYocoCheckout(checkoutId) {
   const resp = await fetch(
     `https://payments.yoco.com/api/checkouts/${checkoutId}`,
@@ -277,6 +324,8 @@ async function fetchYocoCheckout(checkoutId) {
 // ─── Express app ──────────────────────────────────────────────────────────────
 
 const app = express();
+import cors from "cors";
+app.use(cors());
 app.use(express.json());
 
 app.use((req, _res, next) => {
@@ -291,8 +340,6 @@ app.use((req, _res, next) => {
 
 /**
  * POST /api/create-voucher
- * Creates a pending voucher and returns a Yoco checkout URL.
- * The successUrl points back to /api/payment-success for verification.
  */
 app.post("/api/create-voucher", async (req, res) => {
   const {
@@ -325,27 +372,22 @@ app.post("/api/create-voucher", async (req, res) => {
   const created_at = new Date().toISOString();
 
   try {
-    await db.run(
-      `INSERT INTO vouchers
-         (voucher_id, voucher_code, purchase_name, purchase_email,
-          recipient_name, recipient_email, recipient_phone,
-          amount, currency, status, created_at, metadata)
-       VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`,
-      [
-        voucher_id,
-        voucher_code,
-        purchase_name,
-        purchase_email,
-        recipient_name,
-        recipient_email,
-        recipient_phone || null,
-        amount,
-        currency,
-        "pending",
-        created_at,
-        JSON.stringify(metadata || {}),
-      ],
-    );
+    const { error: insertError } = await supabase.from("vouchers").insert({
+      voucher_id,
+      voucher_code,
+      purchase_name,
+      purchase_email,
+      recipient_name,
+      recipient_email,
+      recipient_phone: recipient_phone || null,
+      amount,
+      currency,
+      status: "pending",
+      created_at,
+      metadata: metadata || {},
+    });
+
+    if (insertError) throw insertError;
 
     const successUrl = `${BASE_URL}/api/payment-success?voucher_id=${voucher_id}`;
     const cancelUrl = `${BASE_URL}/api/payment-cancel?voucher_id=${voucher_id}`;
@@ -358,10 +400,12 @@ app.post("/api/create-voucher", async (req, res) => {
       metadata: { voucher_id },
     });
 
-    await db.run(
-      `UPDATE vouchers SET yoco_checkout_id = ? WHERE voucher_id = ?`,
-      [yocoData.id, voucher_id],
-    );
+    const { error: updateError } = await supabase
+      .from("vouchers")
+      .update({ yoco_checkout_id: yocoData.id })
+      .eq("voucher_id", voucher_id);
+
+    if (updateError) throw updateError;
 
     console.log(`[voucher] Created ${voucher_id} — checkout ${yocoData.id}`);
     return res.json({ checkoutUrl: yocoData.redirectUrl, voucher_id });
@@ -377,10 +421,6 @@ app.post("/api/create-voucher", async (req, res) => {
 
 /**
  * GET /api/payment-success?voucher_id=XXX
- *
- * Yoco redirects the customer here after payment.
- * We verify with Yoco's API, issue the voucher, send email,
- * then redirect the customer to the frontend success page.
  */
 app.get("/api/payment-success", async (req, res) => {
   const { voucher_id } = req.query;
@@ -391,17 +431,17 @@ app.get("/api/payment-success", async (req, res) => {
   }
 
   try {
-    const voucher = await db.get(
-      `SELECT * FROM vouchers WHERE voucher_id = ?`,
-      [voucher_id],
-    );
+    const { data: voucher, error: fetchError } = await supabase
+      .from("vouchers")
+      .select("*")
+      .eq("voucher_id", voucher_id)
+      .single();
 
-    if (!voucher) {
+    if (fetchError || !voucher) {
       console.error(`[payment-success] Voucher ${voucher_id} not found`);
       return res.redirect("/#/payment-error");
     }
 
-    // Already processed — safe to redirect (handles page refresh)
     if (voucher.status === "issued" || voucher.status === "redeemed") {
       console.log(
         `[payment-success] Voucher ${voucher_id} already issued — redirecting.`,
@@ -416,7 +456,6 @@ app.get("/api/payment-success", async (req, res) => {
       return res.redirect("/#/payment-error");
     }
 
-    // ── Verify payment status directly with Yoco ───────────────────────────
     const checkout = await fetchYocoCheckout(voucher.yoco_checkout_id);
     console.log(
       `[payment-success] Yoco status: "${checkout.status}" for voucher ${voucher_id}`,
@@ -430,16 +469,23 @@ app.get("/api/payment-success", async (req, res) => {
       return res.redirect(`/#/payment-pending?voucher_id=${voucher_id}`);
     }
 
-    // ── Mark as issued ─────────────────────────────────────────────────────
     const now = new Date().toISOString();
-    const result = await db.run(
-      `UPDATE vouchers
-         SET status = 'issued', yoco_payment_id = ?, paid_at = ?, issued_at = ?
-       WHERE voucher_id = ? AND status = 'pending'`,
-      [checkout.paymentId || checkout.id, now, now, voucher_id],
-    );
 
-    if (result.changes === 0) {
+    // Atomic update: only update if still 'pending' to prevent race conditions
+    const { data: updated, error: updateError } = await supabase
+      .from("vouchers")
+      .update({
+        status: "issued",
+        yoco_payment_id: checkout.paymentId || checkout.id,
+        paid_at: now,
+        issued_at: now,
+      })
+      .eq("voucher_id", voucher_id)
+      .eq("status", "pending") // guard against race conditions
+      .select()
+      .single();
+
+    if (updateError || !updated) {
       console.log(
         `[payment-success] Voucher ${voucher_id} already processed (race condition).`,
       );
@@ -448,19 +494,31 @@ app.get("/api/payment-success", async (req, res) => {
 
     console.log(`[payment-success] Voucher ${voucher_id} issued.`);
 
-    // ── Send email ─────────────────────────────────────────────────────────
     try {
+      const personalMessage = voucher.metadata?.personalMessage || "";
+
       await sendVoucherEmail({
         recipientEmail: voucher.recipient_email,
         voucherCode: voucher.voucher_code,
         amount: voucher.amount,
         currency: voucher.currency,
         purchaseName: voucher.purchase_name,
+        personalMessage,
+      });
+
+      await sendAdminPurchaseNotification({
+        purchaseName: voucher.purchase_name,
+        purchaseEmail: voucher.purchase_email,
+        recipientName: voucher.recipient_name,
+        recipientEmail: voucher.recipient_email,
+        voucherCode: voucher.voucher_code,
+        amount: voucher.amount,
+        currency: voucher.currency,
+        personalMessage,
       });
     } catch (emailErr) {
-      // Don't block the redirect if email fails — voucher is already issued
       console.error(
-        `[payment-success] Email failed for ${voucher_id}:`,
+        `[payment-success] Notification(s) failed for ${voucher_id}:`,
         emailErr.message,
       );
     }
@@ -474,7 +532,6 @@ app.get("/api/payment-success", async (req, res) => {
 
 /**
  * GET /api/payment-cancel?voucher_id=XXX
- * Yoco redirects here if the customer cancels payment.
  */
 app.get("/api/payment-cancel", async (req, res) => {
   const { voucher_id } = req.query;
@@ -484,18 +541,19 @@ app.get("/api/payment-cancel", async (req, res) => {
 
 /**
  * GET /api/voucher-status/:voucher_id
- * Frontend can call this to show confirmation details on the success page.
  */
 app.get("/api/voucher-status/:voucher_id", async (req, res) => {
   try {
-    const voucher = await db.get(
-      `SELECT voucher_id, voucher_code, recipient_name, recipient_email,
-              amount, currency, status, issued_at, purchase_name
-       FROM vouchers WHERE voucher_id = ?`,
-      [req.params.voucher_id],
-    );
+    const { data: voucher, error } = await supabase
+      .from("vouchers")
+      .select(
+        "voucher_id, voucher_code, recipient_name, recipient_email, amount, currency, status, issued_at, purchase_name",
+      )
+      .eq("voucher_id", req.params.voucher_id)
+      .single();
 
-    if (!voucher) return res.status(404).json({ error: "Voucher not found." });
+    if (error || !voucher)
+      return res.status(404).json({ error: "Voucher not found." });
     return res.json(voucher);
   } catch (err) {
     console.error("[voucher-status] Error:", err);
@@ -515,37 +573,42 @@ app.post("/api/redeem-voucher", async (req, res) => {
   }
 
   try {
-    const voucher = await db.get(
-      `SELECT * FROM vouchers WHERE voucher_code = ?`,
-      [voucher_code.trim().toUpperCase()],
-    );
+    const { data: voucher, error: fetchError } = await supabase
+      .from("vouchers")
+      .select("*")
+      .eq("voucher_code", voucher_code.trim().toUpperCase())
+      .single();
 
-    if (!voucher) return res.status(404).json({ error: "Voucher not found." });
+    if (fetchError || !voucher)
+      return res.status(404).json({ error: "Voucher not found." });
     if (voucher.status === "redeemed")
       return res.status(409).json({ error: "Voucher already redeemed." });
-    if (voucher.status !== "issued")
+    if (voucher.status !== "issued") {
       return res
         .status(400)
         .json({
           error: `Voucher status is "${voucher.status}" — cannot redeem.`,
         });
+    }
 
     const redeemed_at = new Date().toISOString();
-    const redeemed_by = JSON.stringify({
+    const redeemed_by = {
       name: redeemer_name,
       email: redeemer_email,
       phone: redeemer_phone,
-    });
+    };
 
-    await db.run(
-      `UPDATE vouchers SET status = 'redeemed', redeemed_at = ?, redeemed_by = ? WHERE voucher_id = ?`,
-      [redeemed_at, redeemed_by, voucher.voucher_id],
-    );
+    const { error: updateError } = await supabase
+      .from("vouchers")
+      .update({ status: "redeemed", redeemed_at, redeemed_by })
+      .eq("voucher_id", voucher.voucher_id);
 
-    // ── Notify Admin ───────────────────────────────────────────────────────
+    if (updateError) throw updateError;
+
     try {
       await sendAdminNotification({
         redeemerName: redeemer_name || "Unknown",
+        redeemerPhone: redeemer_phone || "Not provided",
         voucherCode: voucher.voucher_code,
         amount: voucher.amount,
         currency: voucher.currency,
@@ -580,12 +643,14 @@ app.post("/api/contact", async (req, res) => {
     return res.json({ success: true, message: "Message sent successfully." });
   } catch (err) {
     console.error("[contact] Error sending email:", err);
-    return res.status(500).json({ error: "Failed to send message. Please try again later." });
+    return res
+      .status(500)
+      .json({ error: "Failed to send message. Please try again later." });
   }
 });
 
 /**
- * POST /api/test-email — smoke test for email config
+ * POST /api/test-email
  */
 app.post("/api/test-email", async (req, res) => {
   const {
@@ -594,6 +659,7 @@ app.post("/api/test-email", async (req, res) => {
     currency = "ZAR",
     purchaseName = "Test Sender",
     voucherCode = "TEST-VOUC-HER1",
+    personalMessage = "This is a test personal message! 🌿",
   } = req.body || {};
 
   if (!recipientEmail) {
@@ -607,6 +673,7 @@ app.post("/api/test-email", async (req, res) => {
       amount,
       currency,
       purchaseName,
+      personalMessage,
     });
     return res.json({
       ok: true,
@@ -619,7 +686,7 @@ app.post("/api/test-email", async (req, res) => {
 });
 
 /**
- * Webhook route kept as a fallback — fires if Yoco ever delivers one.
+ * Webhook route — fallback if Yoco delivers one.
  */
 app.post(
   ["/api/yoco-webhook", "/api/webhooks", "/yoco-webhook", "/webhooks"],
@@ -645,25 +712,44 @@ app.post(
     if (!voucher_id) return;
 
     try {
-      const voucher = await db.get(
-        `SELECT * FROM vouchers WHERE voucher_id = ?`,
-        [voucher_id],
-      );
+      const { data: voucher } = await supabase
+        .from("vouchers")
+        .select("*")
+        .eq("voucher_id", voucher_id)
+        .single();
+
       if (!voucher || voucher.status !== "pending") return;
 
       const now = new Date().toISOString();
-      const result = await db.run(
-        `UPDATE vouchers SET status = 'issued', paid_at = ?, issued_at = ? WHERE voucher_id = ? AND status = 'pending'`,
-        [now, now, voucher_id],
-      );
+      const { data: updated } = await supabase
+        .from("vouchers")
+        .update({ status: "issued", paid_at: now, issued_at: now })
+        .eq("voucher_id", voucher_id)
+        .eq("status", "pending")
+        .select()
+        .single();
 
-      if (result.changes > 0) {
+      if (updated) {
+        const personalMessage = voucher.metadata?.personalMessage || "";
+
         await sendVoucherEmail({
           recipientEmail: voucher.recipient_email,
           voucherCode: voucher.voucher_code,
           amount: voucher.amount,
           currency: voucher.currency,
           purchaseName: voucher.purchase_name,
+          personalMessage,
+        });
+
+        await sendAdminPurchaseNotification({
+          purchaseName: voucher.purchase_name,
+          purchaseEmail: voucher.purchase_email,
+          recipientName: voucher.recipient_name,
+          recipientEmail: voucher.recipient_email,
+          voucherCode: voucher.voucher_code,
+          amount: voucher.amount,
+          currency: voucher.currency,
+          personalMessage,
         });
       }
     } catch (err) {
@@ -688,17 +774,9 @@ process.on("uncaughtException", (err) => {
 
 // ─── Start ────────────────────────────────────────────────────────────────────
 
-(async () => {
-  try {
-    await initDb();
-    app.listen(PORT, () => {
-      console.log(
-        `[server] Listening on port ${PORT} (${IS_PROD ? "production" : "development"})`,
-      );
-      console.log(`[server] Public base URL: ${BASE_URL}`);
-    });
-  } catch (err) {
-    console.error("[startup] Failed to start:", err);
-    process.exit(1);
-  }
-})();
+app.listen(PORT, () => {
+  console.log(
+    `[server] Listening on port ${PORT} (${IS_PROD ? "production" : "development"})`,
+  );
+  console.log(`[server] Public base URL: ${BASE_URL}`);
+});

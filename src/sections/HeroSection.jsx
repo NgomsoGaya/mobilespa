@@ -9,7 +9,8 @@ const HeroSection = () => {
             <div className="hero-overlay"></div>
             <div className="hero-content">
                 <p className="hero-label">Embrace Your Wellness</p>
-                <h1 className="hero-title">Wellness Mobile Spa</h1>
+                <h1 className="hero-title">Professional Mobile Spa Services in Cape Town & Atlantic Seaboard</h1>
+                <h2 className="hero-subtitle">Mobile Massage, Skincare & Waxing in Sea Point, Camps Bay & CBD</h2>
                 <p className="hero-subtitle">
                     Experience nourishing spa treatments in the comfort of your home. Our expert therapists bring premium spa treatments directly to you.
                 </p>

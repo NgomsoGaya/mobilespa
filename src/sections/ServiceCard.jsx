@@ -2,10 +2,10 @@ import React from 'react';
 import Button from '../components/UI/Button';
 import './ServiceCard.css';
 
-const ServiceCard = ({ icon, title, shortDescription, onLearnMoreClick }) => { // Updated props
+const ServiceCard = ({ icon, title, shortDescription, onLearnMoreClick, altText }) => { // Updated props
   return (
     <div className="service-card card">
-      <img src={icon} alt={title} className="service-icon" />
+      <img src={icon} alt={altText} className="service-icon" />
       <h3 className="service-title">{title}</h3>
       {/* <p className="service-description">{shortDescription}</p> Use shortDescription */}
       <br />
