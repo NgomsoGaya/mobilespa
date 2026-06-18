@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import Button from '../UI/Button';
 import InputField from '../Forms/InputField';
+import Modal from '../UI/Modal';
 import './VouchersContent.css';
 import voucherImage from '../../assets/images/couplestherapy.jpg'; // Reusing an existing image
 import { API_BASE } from '../../apiConfig';
 
-const VouchersContent = () => {
+const VouchersContent = ({ showModal }) => {
   const [mode, setMode] = useState('purchase'); // 'purchase' or 'redeem'
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> backend-production
   const [purchaseForm, setPurchaseForm] = useState({
     yourName: '',
     yourEmail: '',
@@ -45,7 +49,11 @@ const VouchersContent = () => {
       }
 
       try {
+<<<<<<< HEAD
         const response = await fetch(`${API_BASE}/api/create-voucher`, {
+=======
+        const response = await fetch('/api/create-voucher', {
+>>>>>>> backend-production
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -72,7 +80,11 @@ const VouchersContent = () => {
       }
 
       try {
+<<<<<<< HEAD
         const response = await fetch(`${API_BASE}/api/redeem-voucher`, {
+=======
+        const response = await fetch('/api/redeem-voucher', {
+>>>>>>> backend-production
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -95,7 +107,10 @@ const VouchersContent = () => {
       }
     }
   };
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> backend-production
 
   return (
     <div className="vouchers-content-wrapper">
@@ -115,21 +130,95 @@ const VouchersContent = () => {
           {mode === 'purchase' ? (
             <div>
               <h3>Purchase a Voucher</h3>
-              <form className="voucher-form">
-                <InputField label="Your Name" type="text" placeholder="Enter your name" />
-                <InputField label="Recipient's Name" type="text" placeholder="Enter recipient's name" />
-                <InputField label="Recipient's Email" type="email" placeholder="Enter recipient's email" />
-                <InputField label="Amount" type="number" placeholder="Enter amount" />
-                <InputField label="Personal Message" type="textarea" placeholder="Enter a personal message" />
-                <Button type="primary" onClick={() => alert('Voucher purchased!')}>Purchase via Whatsapp</Button>
+              <form className="voucher-form" onSubmit={handleVoucherSubmit}>
+                <InputField
+                  label="Your Name"
+                  type="text"
+                  name="yourName"
+                  value={purchaseForm.yourName}
+                  onChange={handlePurchaseInputChange}
+                  placeholder="Enter your name"
+                />
+                <InputField
+                  label="Your Email"
+                  type="email"
+                  name="yourEmail"
+                  value={purchaseForm.yourEmail}
+                  onChange={handlePurchaseInputChange}
+                  placeholder="Enter your email"
+                />
+                <InputField
+                  label="Recipient's Name"
+                  type="text"
+                  name="recipientName"
+                  value={purchaseForm.recipientName}
+                  onChange={handlePurchaseInputChange}
+                  placeholder="Enter recipient's name"
+                />
+                <InputField
+                  label="Recipient's Email"
+                  type="email"
+                  name="recipientEmail"
+                  value={purchaseForm.recipientEmail}
+                  onChange={handlePurchaseInputChange}
+                  placeholder="Enter recipient's email"
+                />
+                <InputField
+                  label="Amount"
+                  type="number"
+                  name="amount"
+                  value={purchaseForm.amount}
+                  onChange={handlePurchaseInputChange}
+                  placeholder="Enter amount"
+                />
+                <InputField
+                  label="Personal Message"
+                  type="textarea"
+                  name="personalMessage"
+                  value={purchaseForm.personalMessage}
+                  onChange={handlePurchaseInputChange}
+                  placeholder="Enter a personal message"
+                />
+                <Button type="primary" htmlType="submit">Pay with Yoco</Button>
               </form>
             </div>
           ) : (
             <div>
               <h3>Redeem a Voucher</h3>
-              <form className="voucher-form">
-                <InputField label="Voucher Code" type="text" placeholder="Enter your voucher code" />
-                <Button type="primary" onClick={() => alert('Voucher redeemed!')}>Redeem via Whatsapp</Button>
+              <form className="voucher-form" onSubmit={handleVoucherSubmit}>
+                <InputField
+                  label="Your Name"
+                  type="text"
+                  name="yourName"
+                  value={redeemForm.yourName}
+                  onChange={handleRedeemInputChange}
+                  placeholder="Enter your name"
+                />
+                <InputField
+                  label="Your Email"
+                  type="email"
+                  name="yourEmail"
+                  value={redeemForm.yourEmail}
+                  onChange={handleRedeemInputChange}
+                  placeholder="Enter your email"
+                />
+                <InputField
+                  label="Your Phone Number"
+                  type="tel"
+                  name="yourPhone"
+                  value={redeemForm.yourPhone}
+                  onChange={handleRedeemInputChange}
+                  placeholder="Enter your phone number"
+                />
+                <InputField
+                  label="Voucher Code"
+                  type="text"
+                  name="voucherCode"
+                  value={redeemForm.voucherCode}
+                  onChange={handleRedeemInputChange}
+                  placeholder="Enter your voucher code"
+                />
+                <Button type="primary" htmlType="submit">Redeem Voucher</Button>
               </form>
             </div>
           )}

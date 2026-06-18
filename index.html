@@ -3,13 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" href="/favicon.png" sizes="any">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wellness Mobile Spa</title>
-    <meta name="description" content="Premium at-home spa services brought directly to you. Book your sanctuary today." />
-  </head>
+    <title>Mobile Spa & Waxing Cape Town | Wellness Mobile Spa | Atlantic Seaboard</title>
+    <meta name="description" content="Premium at-home spa services in Cape Town CBD, Sea Point, and Camps Bay. Professional massage, waxing, skincare, and pedicures brought to your sanctuary. Book today." />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Spa",
+  "name": "Wellness Mobile Spa",
+  "url": "http://yourwellnessmobilespa.co.za",
+  "logo": "URL_TO_FAVICON_IMAGE",
+  "description": "Premium mobile spa services in Cape Town, serving Sea Point, Camps Bay, and the CBD.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Cape Town",
+    "addressRegion": "Western Cape",
+    "addressCountry": "ZA"
+  },
+  "areaServed": [
+    "Cape Town CBD", "Sea Point", "Camps Bay", "Clifton", "Bantry Bay", "Green Point"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Mobile Spa Services",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Massage Therapy" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Waxing" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Skincare & Facials" } }
+    ]
+  }
+}
+</script>
+</head>
   <body>
     <div id="root"></div>
     <script type="module" src="./src/main.tsx"></script>

@@ -9,6 +9,7 @@ const servicesData = [
     icon: massageTherapy, // Placeholder, will need to confirm image
     title: 'Spa Treatments',
     shortDescription: 'Finest wellness treatments: relaxation, invigorating, or reducing stress. Kid\'s treatments available.',
+    altText: 'Mobile spa treatments and massage therapy in Cape Town',
     modalContent: {
       description: 'Your wellness Mobile spa provides an array of the finest wellness treatments, each with a specific goal such as relaxation, invigorating, or reducing stress. Kid\'s treatments are available on request.',
       listItems: ['Massages', 'Pregnancy massages', 'Wood therapy', 'Facials and waxes', 'Hands and foot care'],
@@ -24,6 +25,7 @@ const servicesData = [
     icon: couplesTherapy, // Placeholder
     title: 'Special Occasions & Pamper Parties',
     shortDescription: 'Celebrate with bespoke pamper parties for any event.',
+    altText: 'Mobile pamper parties and spa services for special occasions in Cape Town',
     modalContent: {
       description: 'Make your special day or event unforgettable with our bespoke pamper parties. Perfect for bridal showers, birthdays, corporate events, or just a luxurious get-together with friends.',
       listItems: ['Bridal showers', 'Birthdays', 'Corporate events', 'Friend\'s gatherings'],
@@ -40,6 +42,7 @@ const servicesData = [
     icon: facial, // Placeholder
     title: 'Hotel | Guest house | Airbnb',
     shortDescription: 'Elevate guest experience with on-site spa services.',
+    altText: 'Mobile spa services for hotel guests, guest houses, and Airbnb in Cape Town',
     modalContent: {
       description: 'Partner with us to offer your guests an unparalleled level of comfort and luxury. Provide on-site spa treatments without the overhead of a permanent spa facility.',
       listItems: ['Enhance guest experience', 'Increase guest satisfaction', 'Flexible service scheduling'],
@@ -55,6 +58,7 @@ const servicesData = [
     icon: aromatherapy, // Placeholder
     title: 'Corporate Wellness',
     shortDescription: 'Boost team morale and productivity with corporate wellness programs.',
+    altText: 'Mobile corporate wellness programs and spa treatments for businesses in Cape Town',
     modalContent: {
       description: 'Invest in your team\'s well-being with our tailored corporate wellness programs. Reduce stress, improve focus, and boost morale right in your office.',
       listItems: ['Seated massages', 'Express facials', 'Stress relief workshops'],

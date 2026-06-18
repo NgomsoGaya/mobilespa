@@ -2,28 +2,39 @@ import React, { useState } from 'react';
 import FadeInOnScroll from '../components/Transitions/FadeInOnScroll';
 import Button from '../components/UI/Button';
 import InputField from '../components/Forms/InputField';
+import Modal from '../components/UI/Modal';
 import './VouchersSection.css';
 import voucherImage from '../assets/images/couplestherapy.jpg'; // Reusing an existing image
 <<<<<<< Updated upstream
 
-const WHATSAPP_NUMBER = '+27774478258'; // TODO: Move to a global config/environment variable
 
+<<<<<<< HEAD
 const VouchersSection = () => {
 =======
 import { API_BASE } from '../apiConfig';
 
 const VouchersSection = ({ showModal }) => {
 >>>>>>> Stashed changes
+=======
+
+
+
+
+const VouchersSection = ({ showModal }) => {
+>>>>>>> backend-production
   const [mode, setMode] = useState('purchase'); // 'purchase' or 'redeem'
   const [purchaseForm, setPurchaseForm] = useState({
     yourName: '',
+    yourEmail: '', // New field for purchaser's email
     recipientName: '',
     recipientEmail: '',
     amount: '',
     personalMessage: '',
   });
   const [redeemForm, setRedeemForm] = useState({
-    yourName: '', // Assuming 'Your Name' from purchase form applies here too for customer details
+    yourName: '',
+    yourEmail: '',
+    yourPhone: '',
     voucherCode: '',
   });
 
@@ -38,39 +49,32 @@ const VouchersSection = ({ showModal }) => {
   };
 
   const validatePurchaseForm = () => {
-    const { yourName, recipientName, recipientEmail, amount } = purchaseForm;
-    if (!yourName.trim() || !recipientName.trim() || !recipientEmail.trim() || !amount) {
-      alert('Please fill in all required fields for voucher purchase (Your Name, Recipient Name, Recipient Email, Amount).');
-      return false;
-    }
-    if (!/\S+@\S+\.\S+/.test(recipientEmail)) {
-      alert('Please enter a valid recipient email address.');
-      return false;
-    }
-    if (isNaN(amount) || parseFloat(amount) <= 0) {
-      alert('Please enter a valid amount for the voucher.');
+    const { yourName, yourEmail, recipientName, recipientEmail, amount } = purchaseForm;
+    if (!yourName.trim() || !yourEmail.trim() || !recipientName.trim() || !recipientEmail.trim() || !amount) {
+      showModal('Missing Info', 'Please fill in all required fields for voucher purchase.', 'error');
       return false;
     }
     return true;
   };
 
   const validateRedeemForm = () => {
-    const { yourName, voucherCode } = redeemForm;
-    if (!yourName.trim() || !voucherCode.trim()) {
-      alert('Please fill in all required fields for voucher redemption (Your Name, Voucher Code).');
+    const { yourName, yourEmail, yourPhone, voucherCode } = redeemForm;
+    if (!yourName.trim() || !yourEmail.trim() || !yourPhone.trim() || !voucherCode.trim()) {
+      showModal('Missing Info', 'Please fill in all required fields for voucher redemption (Name, Email, Phone, and Code).', 'error');
+      return false;
+    }
+    if (!/\S+@\S+\.\S+/.test(yourEmail)) {
+      showModal('Invalid Email', 'Please enter a valid email address.', 'error');
       return false;
     }
     return true;
   };
 
-  const handleVoucherSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission
-
-    let message = '';
-    let whatsappUrl = '';
-    const transactionType = mode === 'purchase' ? 'Voucher Purchase' : 'Voucher Redemption';
+  const handleVoucherSubmit = async (e) => {
+    e.preventDefault();
 
     if (mode === 'purchase') {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       if (!validatePurchaseForm()) {
         return;
@@ -118,14 +122,34 @@ Customer Name: ${redeemForm.yourName}
 Voucher Code: ${redeemForm.voucherCode}
       `;
     }
+=======
+      if (!validatePurchaseForm()) return;
+>>>>>>> backend-production
 
-    whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+      const amountValue = parseFloat(purchaseForm.amount);
+      try {
+        const response = await fetch('/api/create-voucher', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            purchase_name: purchaseForm.yourName,
+            purchase_email: purchaseForm.yourEmail,
+            recipient_name: purchaseForm.recipientName,
+            recipient_email: purchaseForm.recipientEmail,
+            amount: Math.round(amountValue * 100),
+            currency: 'ZAR',
+            metadata: { personalMessage: purchaseForm.personalMessage },
+          }),
+        });
 
-    // Optionally reset form after submission
-    if (mode === 'purchase') {
-      setPurchaseForm({ yourName: '', recipientName: '', recipientEmail: '', amount: '', personalMessage: '' });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Failed to create voucher');
+        window.location.href = data.checkoutUrl;
+      } catch (err) {
+        showModal('Error', err.message, 'error');
+      }
     } else {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       setRedeemForm({ yourName: '', voucherCode: '' });
 =======
@@ -133,6 +157,12 @@ Voucher Code: ${redeemForm.voucherCode}
 
       try {
         const response = await fetch(`${API_BASE}/api/redeem-voucher`, {
+=======
+      if (!validateRedeemForm()) return;
+
+      try {
+        const response = await fetch('/api/redeem-voucher', {
+>>>>>>> backend-production
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -153,7 +183,10 @@ Voucher Code: ${redeemForm.voucherCode}
       } catch (err) {
         showModal('System Error', 'Unable to process redemption. Please try again later.', 'error');
       }
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> backend-production
     }
   };
 
@@ -185,7 +218,14 @@ Voucher Code: ${redeemForm.voucherCode}
                     value={purchaseForm.yourName}
                     onChange={handlePurchaseInputChange}
                     placeholder="Enter your name"
-                    required // HTML5 required attribute
+                  />
+                  <InputField
+                    label="Your Email"
+                    type="email"
+                    name="yourEmail"
+                    value={purchaseForm.yourEmail}
+                    onChange={handlePurchaseInputChange}
+                    placeholder="Enter your email"
                   />
                   <InputField
                     label="Recipient's Name"
@@ -194,7 +234,6 @@ Voucher Code: ${redeemForm.voucherCode}
                     value={purchaseForm.recipientName}
                     onChange={handlePurchaseInputChange}
                     placeholder="Enter recipient's name"
-                    required
                   />
                   <InputField
                     label="Recipient's Email"
@@ -203,7 +242,6 @@ Voucher Code: ${redeemForm.voucherCode}
                     value={purchaseForm.recipientEmail}
                     onChange={handlePurchaseInputChange}
                     placeholder="Enter recipient's email"
-                    required
                   />
                   <InputField
                     label="Amount"
@@ -212,8 +250,7 @@ Voucher Code: ${redeemForm.voucherCode}
                     value={purchaseForm.amount}
                     onChange={handlePurchaseInputChange}
                     placeholder="Enter amount"
-                    min="1" // Minimum amount
-                    required
+                    min="1"
                   />
                   <InputField
                     label="Personal Message"
@@ -223,7 +260,7 @@ Voucher Code: ${redeemForm.voucherCode}
                     onChange={handlePurchaseInputChange}
                     placeholder="Enter a personal message"
                   />
-                  <Button type="primary" type="submit">Purchase via Whatsapp</Button>
+                  <Button type="primary" htmlType="submit">Pay with Yoco</Button>
                 </form>
               </div>
             ) : (
@@ -231,13 +268,28 @@ Voucher Code: ${redeemForm.voucherCode}
                 <h3>Redeem a Voucher</h3>
                 <form className="voucher-form" onSubmit={handleVoucherSubmit}>
                   <InputField
-                    label="Your Name" // Added for customer details in redemption
+                    label="Your Name"
                     type="text"
                     name="yourName"
                     value={redeemForm.yourName}
                     onChange={handleRedeemInputChange}
                     placeholder="Enter your name"
-                    required
+                  />
+                  <InputField
+                    label="Your Email"
+                    type="email"
+                    name="yourEmail"
+                    value={redeemForm.yourEmail}
+                    onChange={handleRedeemInputChange}
+                    placeholder="Enter your email"
+                  />
+                  <InputField
+                    label="Your Phone Number"
+                    type="tel"
+                    name="yourPhone"
+                    value={redeemForm.yourPhone}
+                    onChange={handleRedeemInputChange}
+                    placeholder="Enter your phone number"
                   />
                   <InputField
                     label="Voucher Code"
@@ -246,9 +298,8 @@ Voucher Code: ${redeemForm.voucherCode}
                     value={redeemForm.voucherCode}
                     onChange={handleRedeemInputChange}
                     placeholder="Enter your voucher code"
-                    required
                   />
-                  <Button type="primary" type="submit">Redeem via Whatsapp</Button>
+                  <Button type="primary" htmlType="submit">Redeem Voucher</Button>
                 </form>
               </div>
             )}

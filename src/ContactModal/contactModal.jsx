@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './ContactModal.css';
+<<<<<<< HEAD
 import { API_BASE } from '../apiConfig';
+=======
+>>>>>>> backend-production
 
 const ContactModal = ({ isOpen, onClose }) => {
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
@@ -15,7 +18,11 @@ const ContactModal = ({ isOpen, onClose }) => {
     const data = Object.fromEntries(formData.entries());
 
     try {
+<<<<<<< HEAD
       const response = await fetch(`${API_BASE}/api/contact`, {
+=======
+      const response = await fetch("/api/contact", {
+>>>>>>> backend-production
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)

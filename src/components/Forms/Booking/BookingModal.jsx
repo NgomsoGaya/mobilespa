@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import Button from '../../UI/Button';
 import InputField from '../InputField';
+import Modal from '../../UI/Modal';
 import './BookingModal.css';
 
 const WHATSAPP_NUMBER = '+27774478258'; // TODO: Move to a global config/environment variable
 
 const BookingModal = ({ isOpen, onClose, bookingDetails, onRemoveService, onResetBooking, selectedServices }) => { // NEW PROP
   const [step, setStep] = useState(1);
+  const [modal, setModal] = useState({ isOpen: false, title: '', message: '', type: 'info' });
   const [customerDetails, setCustomerDetails] = useState({
     name: '',
     email: '',
@@ -24,12 +26,22 @@ const BookingModal = ({ isOpen, onClose, bookingDetails, onRemoveService, onRese
   const validateStep1 = () => {
     const { name, email, phone } = customerDetails;
     if (!name.trim() || !email.trim() || !phone.trim()) {
-      alert('Please fill in all required customer details (Name, Email, Phone).');
+      setModal({
+        isOpen: true,
+        title: 'Missing Info',
+        message: 'Please fill in all required customer details (Name, Email, Phone).',
+        type: 'error'
+      });
       return false;
     }
     // Basic email validation
     if (!/\S+@\S+\.\S+/.test(email)) {
-      alert('Please enter a valid email address.');
+      setModal({
+        isOpen: true,
+        title: 'Invalid Email',
+        message: 'Please enter a valid email address.',
+        type: 'error'
+      });
       return false;
     }
     return true;
@@ -38,7 +50,12 @@ const BookingModal = ({ isOpen, onClose, bookingDetails, onRemoveService, onRese
   const validateStep2 = () => {
     const { address } = customerDetails;
     if (!address.trim()) {
-      alert('Please provide your address or share your location.');
+      setModal({
+        isOpen: true,
+        title: 'Address Required',
+        message: 'Please provide your address or share your location.',
+        type: 'error'
+      });
       return false;
     }
     return true;
@@ -61,18 +78,33 @@ const BookingModal = ({ isOpen, onClose, bookingDetails, onRemoveService, onRese
           const { latitude, longitude } = position.coords;
           const googleMapsUrl = `https://maps.google.com/?q=${latitude},${longitude}`;
           setCustomerDetails((prevDetails) => ({ ...prevDetails, address: googleMapsUrl }));
-          alert('Location shared successfully!');
+          setModal({
+            isOpen: true,
+            title: 'Location Shared',
+            message: 'Location shared successfully!',
+            type: 'success'
+          });
         },
         (error) => {
           console.error('Error getting location:', error);
           setCustomerDetails((prevDetails) => ({ ...prevDetails, address: 'Unable to retrieve location. Please enter manually.' }));
-          alert('Unable to retrieve your location. Please enter your address manually.');
+          setModal({
+            isOpen: true,
+            title: 'Location Error',
+            message: 'Unable to retrieve your location. Please enter your address manually.',
+            type: 'error'
+          });
         },
         { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
       );
     } else {
       setCustomerDetails((prevDetails) => ({ ...prevDetails, address: 'Geolocation not supported by this browser. Please enter manually.' }));
-      alert('Geolocation is not supported by your browser. Please enter your address manually.');
+      setModal({
+        isOpen: true,
+        title: 'Not Supported',
+        message: 'Geolocation is not supported by your browser. Please enter your address manually.',
+        type: 'error'
+      });
     }
   };
 
@@ -143,6 +175,14 @@ Location: ${customerDetails.address}
 
   return (
     <div className="modal-overlay">
+      <Modal 
+        isOpen={modal.isOpen} 
+        onClose={() => setModal({ ...modal, isOpen: false })}
+        title={modal.title}
+        type={modal.type}
+      >
+        <p>{modal.message}</p>
+      </Modal>
       <div className="modal-content">
         <button className="modal-close" onClick={onClose}>&times;</button>
         <h2>Confirm Your Booking</h2>
