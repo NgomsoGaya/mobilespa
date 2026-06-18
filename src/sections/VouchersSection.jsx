@@ -4,10 +4,16 @@ import Button from '../components/UI/Button';
 import InputField from '../components/Forms/InputField';
 import './VouchersSection.css';
 import voucherImage from '../assets/images/couplestherapy.jpg'; // Reusing an existing image
+<<<<<<< Updated upstream
 
 const WHATSAPP_NUMBER = '+27774478258'; // TODO: Move to a global config/environment variable
 
 const VouchersSection = () => {
+=======
+import { API_BASE } from '../apiConfig';
+
+const VouchersSection = ({ showModal }) => {
+>>>>>>> Stashed changes
   const [mode, setMode] = useState('purchase'); // 'purchase' or 'redeem'
   const [purchaseForm, setPurchaseForm] = useState({
     yourName: '',
@@ -65,8 +71,34 @@ const VouchersSection = () => {
     const transactionType = mode === 'purchase' ? 'Voucher Purchase' : 'Voucher Redemption';
 
     if (mode === 'purchase') {
+<<<<<<< Updated upstream
       if (!validatePurchaseForm()) {
         return;
+=======
+      if (!validatePurchaseForm()) return;
+
+      const amountValue = parseFloat(purchaseForm.amount);
+      try {
+        const response = await fetch(`${API_BASE}/api/create-voucher`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            purchase_name: purchaseForm.yourName,
+            purchase_email: purchaseForm.yourEmail,
+            recipient_name: purchaseForm.recipientName,
+            recipient_email: purchaseForm.recipientEmail,
+            amount: Math.round(amountValue * 100),
+            currency: 'ZAR',
+            metadata: { personalMessage: purchaseForm.personalMessage },
+          }),
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Failed to create voucher');
+        window.location.href = data.checkoutUrl;
+      } catch (err) {
+        showModal('Error', err.message, 'error');
+>>>>>>> Stashed changes
       }
       message = `
 Transaction Type: ${transactionType}
@@ -94,7 +126,34 @@ Voucher Code: ${redeemForm.voucherCode}
     if (mode === 'purchase') {
       setPurchaseForm({ yourName: '', recipientName: '', recipientEmail: '', amount: '', personalMessage: '' });
     } else {
+<<<<<<< Updated upstream
       setRedeemForm({ yourName: '', voucherCode: '' });
+=======
+      if (!validateRedeemForm()) return;
+
+      try {
+        const response = await fetch(`${API_BASE}/api/redeem-voucher`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            voucher_code: redeemForm.voucherCode,
+            redeemer_name: redeemForm.yourName,
+            redeemer_email: redeemForm.yourEmail,
+            redeemer_phone: redeemForm.yourPhone,
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          showModal('Success!', 'Voucher successfully redeemed! Our team has been notified, and will contact you shortly.', 'success');
+          setRedeemForm({ yourName: '', yourEmail: '', yourPhone: '', voucherCode: '' });
+        } else {
+          showModal('Redemption Failed', data.error || 'Failed to redeem voucher.', 'error');
+        }
+      } catch (err) {
+        showModal('System Error', 'Unable to process redemption. Please try again later.', 'error');
+      }
+>>>>>>> Stashed changes
     }
   };
 
