@@ -325,7 +325,6 @@ async function fetchYocoCheckout(checkoutId) {
 
 const app = express();
 import cors from "cors";
-<<<<<<< HEAD
 
 const allowedOrigins = [
   "https://yourwellnessmobilespa.co.za",
@@ -347,9 +346,6 @@ app.use(
     },
   }),
 );
-=======
-app.use(cors());
->>>>>>> backend-production
 app.use(express.json());
 
 app.use((req, _res, next) => {
