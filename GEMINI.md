@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-🛠️ Developer Debugging & Resolution Guide
-=======
 # Wellness Mobile Spa - Project Documentation
->>>>>>> backend-production
 
 Welcome to the Wellness Mobile Spa project! This document provides a comprehensive overview of the project's architecture, technology stack, and development workflows to help you get up to speed quickly.
 
@@ -143,25 +138,18 @@ ADMIN_EMAIL=admin@wellnesmobilespa.co.za
 
 ---
 
-<<<<<<< HEAD
-Example (in the code): <a href="/path/to/brochure.pdf?v=1704067200" ... >
+## 🛠️ Developer Debugging & Resolution Guide
 
-Where 1704067200 is a timestamp that changes when the file is updated.
-
-Summary Action: The developer should prioritize Step 2 (Renaming and Updating References) as it is the most robust and immediate solution for a stubborn caching issue.
-=======
-Project Architecture Context
+### Project Architecture Context
 We have moved from a local development environment (using ngrok) to a decoupled production architecture.
 
-Backend (mobilespa-backend): A Node.js Web Service deployed on Render. It handles database operations (Supabase), payment processing, and email triggers. It uses the backend folder as its root.
+**Backend (mobilespa-backend)**: A Node.js Web Service deployed on Render. It handles database operations (Supabase), payment processing, and email triggers. It uses the backend folder as its root.
 
-Frontend (mobilespa): A React/Vite Static Site hosted on GitHub Pages or Render Static Sites. It is responsible for the UI/UX.
+**Frontend (mobilespa)**: A React/Vite Static Site hosted on GitHub Pages or Render Static Sites. It is responsible for the UI/UX.
 
-The Bridge: These two services communicate over the internet using HTTP requests (API calls). For this to work, the Frontend must know exactly where the Backend lives (the BASE_URL).
+**The Bridge**: These two services communicate over the internet using HTTP requests (API calls). For this to work, the Frontend must know exactly where the Backend lives (the BASE_URL).
 
-Instructions for Gemini to Update the Frontend
-Please provide the following prompt to your AI collaborator to execute the necessary changes on your frontend codebase:
-
+### Instructions for Gemini to Update the Frontend
 "Gemini, I need to update the frontend to point to my new production backend.
 
 Create an API config: Please create a src/apiConfig.js file and export a constant API_BASE set to 'https://mobilespa-backend.onrender.com'.
@@ -173,7 +161,5 @@ Refactor: Ensure that all fetch requests are using template literals (e.g., ${AP
 CORS check: Please check my server.js (if accessible) and ensure the cors middleware is configured to accept requests from my production frontend URL: 'https://yourwellnessmobilespa.co.za/'.
 
 Please walk me through which files you are modifying and provide the code snippets for each update."
->>>>>>> Stashed changes
-=======
+
 *Last Updated: June 2026*
->>>>>>> backend-production

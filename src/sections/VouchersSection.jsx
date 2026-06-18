@@ -2,30 +2,15 @@ import React, { useState } from 'react';
 import FadeInOnScroll from '../components/Transitions/FadeInOnScroll';
 import Button from '../components/UI/Button';
 import InputField from '../components/Forms/InputField';
-import Modal from '../components/UI/Modal';
 import './VouchersSection.css';
 import voucherImage from '../assets/images/couplestherapy.jpg'; // Reusing an existing image
-<<<<<<< Updated upstream
-
-
-<<<<<<< HEAD
-const VouchersSection = () => {
-=======
 import { API_BASE } from '../apiConfig';
 
 const VouchersSection = ({ showModal }) => {
->>>>>>> Stashed changes
-=======
-
-
-
-
-const VouchersSection = ({ showModal }) => {
->>>>>>> backend-production
   const [mode, setMode] = useState('purchase'); // 'purchase' or 'redeem'
   const [purchaseForm, setPurchaseForm] = useState({
     yourName: '',
-    yourEmail: '', // New field for purchaser's email
+    yourEmail: '',
     recipientName: '',
     recipientEmail: '',
     amount: '',
@@ -51,7 +36,7 @@ const VouchersSection = ({ showModal }) => {
   const validatePurchaseForm = () => {
     const { yourName, yourEmail, recipientName, recipientEmail, amount } = purchaseForm;
     if (!yourName.trim() || !yourEmail.trim() || !recipientName.trim() || !recipientEmail.trim() || !amount) {
-      showModal('Missing Info', 'Please fill in all required fields for voucher purchase.', 'error');
+      showModal('Missing Info', 'Please fill in all required fields.', 'error');
       return false;
     }
     return true;
@@ -60,11 +45,7 @@ const VouchersSection = ({ showModal }) => {
   const validateRedeemForm = () => {
     const { yourName, yourEmail, yourPhone, voucherCode } = redeemForm;
     if (!yourName.trim() || !yourEmail.trim() || !yourPhone.trim() || !voucherCode.trim()) {
-      showModal('Missing Info', 'Please fill in all required fields for voucher redemption (Name, Email, Phone, and Code).', 'error');
-      return false;
-    }
-    if (!/\S+@\S+\.\S+/.test(yourEmail)) {
-      showModal('Invalid Email', 'Please enter a valid email address.', 'error');
+      showModal('Missing Info', 'Please fill in all required fields.', 'error');
       return false;
     }
     return true;
@@ -74,11 +55,6 @@ const VouchersSection = ({ showModal }) => {
     e.preventDefault();
 
     if (mode === 'purchase') {
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-      if (!validatePurchaseForm()) {
-        return;
-=======
       if (!validatePurchaseForm()) return;
 
       const amountValue = parseFloat(purchaseForm.amount);
@@ -102,67 +78,12 @@ const VouchersSection = ({ showModal }) => {
         window.location.href = data.checkoutUrl;
       } catch (err) {
         showModal('Error', err.message, 'error');
->>>>>>> Stashed changes
-      }
-      message = `
-Transaction Type: ${transactionType}
-Customer Name: ${purchaseForm.yourName}
-Recipient Name: ${purchaseForm.recipientName}
-Recipient Email: ${purchaseForm.recipientEmail}
-Amount: R${purchaseForm.amount}
-Personal Message: ${purchaseForm.personalMessage}
-      `;
-    } else { // redeem
-      if (!validateRedeemForm()) {
-        return;
-      }
-      message = `
-Transaction Type: ${transactionType}
-Customer Name: ${redeemForm.yourName}
-Voucher Code: ${redeemForm.voucherCode}
-      `;
-    }
-=======
-      if (!validatePurchaseForm()) return;
->>>>>>> backend-production
-
-      const amountValue = parseFloat(purchaseForm.amount);
-      try {
-        const response = await fetch('/api/create-voucher', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            purchase_name: purchaseForm.yourName,
-            purchase_email: purchaseForm.yourEmail,
-            recipient_name: purchaseForm.recipientName,
-            recipient_email: purchaseForm.recipientEmail,
-            amount: Math.round(amountValue * 100),
-            currency: 'ZAR',
-            metadata: { personalMessage: purchaseForm.personalMessage },
-          }),
-        });
-
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || 'Failed to create voucher');
-        window.location.href = data.checkoutUrl;
-      } catch (err) {
-        showModal('Error', err.message, 'error');
       }
     } else {
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-      setRedeemForm({ yourName: '', voucherCode: '' });
-=======
       if (!validateRedeemForm()) return;
 
       try {
         const response = await fetch(`${API_BASE}/api/redeem-voucher`, {
-=======
-      if (!validateRedeemForm()) return;
-
-      try {
-        const response = await fetch('/api/redeem-voucher', {
->>>>>>> backend-production
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -183,10 +104,6 @@ Voucher Code: ${redeemForm.voucherCode}
       } catch (err) {
         showModal('System Error', 'Unable to process redemption. Please try again later.', 'error');
       }
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> backend-production
     }
   };
 
@@ -250,7 +167,6 @@ Voucher Code: ${redeemForm.voucherCode}
                     value={purchaseForm.amount}
                     onChange={handlePurchaseInputChange}
                     placeholder="Enter amount"
-                    min="1"
                   />
                   <InputField
                     label="Personal Message"
