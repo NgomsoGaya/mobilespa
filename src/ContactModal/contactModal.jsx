@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ContactModal.css';
+import './contactModal.css';
 import { API_BASE } from '../apiConfig';
 
 const ContactModal = ({ isOpen, onClose }) => {
