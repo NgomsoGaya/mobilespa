@@ -2,20 +2,15 @@ import React, { useState } from 'react';
 import FadeInOnScroll from '../components/Transitions/FadeInOnScroll';
 import Button from '../components/UI/Button';
 import InputField from '../components/Forms/InputField';
-import Modal from '../components/UI/Modal';
 import './VouchersSection.css';
 import voucherImage from '../assets/images/couplestherapy.jpg'; // Reusing an existing image
-
-
-
-
-
+import { API_BASE } from '../apiConfig';
 
 const VouchersSection = ({ showModal }) => {
   const [mode, setMode] = useState('purchase'); // 'purchase' or 'redeem'
   const [purchaseForm, setPurchaseForm] = useState({
     yourName: '',
-    yourEmail: '', // New field for purchaser's email
+    yourEmail: '',
     recipientName: '',
     recipientEmail: '',
     amount: '',
@@ -41,7 +36,7 @@ const VouchersSection = ({ showModal }) => {
   const validatePurchaseForm = () => {
     const { yourName, yourEmail, recipientName, recipientEmail, amount } = purchaseForm;
     if (!yourName.trim() || !yourEmail.trim() || !recipientName.trim() || !recipientEmail.trim() || !amount) {
-      showModal('Missing Info', 'Please fill in all required fields for voucher purchase.', 'error');
+      showModal('Missing Info', 'Please fill in all required fields.', 'error');
       return false;
     }
     return true;
@@ -50,11 +45,7 @@ const VouchersSection = ({ showModal }) => {
   const validateRedeemForm = () => {
     const { yourName, yourEmail, yourPhone, voucherCode } = redeemForm;
     if (!yourName.trim() || !yourEmail.trim() || !yourPhone.trim() || !voucherCode.trim()) {
-      showModal('Missing Info', 'Please fill in all required fields for voucher redemption (Name, Email, Phone, and Code).', 'error');
-      return false;
-    }
-    if (!/\S+@\S+\.\S+/.test(yourEmail)) {
-      showModal('Invalid Email', 'Please enter a valid email address.', 'error');
+      showModal('Missing Info', 'Please fill in all required fields.', 'error');
       return false;
     }
     return true;
@@ -68,7 +59,7 @@ const VouchersSection = ({ showModal }) => {
 
       const amountValue = parseFloat(purchaseForm.amount);
       try {
-        const response = await fetch('/api/create-voucher', {
+        const response = await fetch(`${API_BASE}/api/create-voucher`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -92,7 +83,7 @@ const VouchersSection = ({ showModal }) => {
       if (!validateRedeemForm()) return;
 
       try {
-        const response = await fetch('/api/redeem-voucher', {
+        const response = await fetch(`${API_BASE}/api/redeem-voucher`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -176,7 +167,6 @@ const VouchersSection = ({ showModal }) => {
                     value={purchaseForm.amount}
                     onChange={handlePurchaseInputChange}
                     placeholder="Enter amount"
-                    min="1"
                   />
                   <InputField
                     label="Personal Message"

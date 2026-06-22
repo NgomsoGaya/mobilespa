@@ -74,6 +74,25 @@ function generateVoucherCode() {
 
 // ─── Email ────────────────────────────────────────────────────────────────────
 
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  family: 4,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+  connectionTimeout: 10_000,
+  greetingTimeout: 10_000,
+  socketTimeout: 15_000,
+});
+
+transporter.verify((err) => {
+  if (err) console.error("[email] SMTP transport verification failed:", err.message);
+  else console.log("[email] SMTP transport ready.");
+});
+
 async function sendVoucherEmail({
   recipientEmail,
   voucherCode,
@@ -82,14 +101,6 @@ async function sendVoucherEmail({
   purchaseName,
   personalMessage,
 }) {
-  const transporter = nodemailer.createTransport({
-    service: process.env.EMAIL_SERVICE || "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
   await transporter.sendMail({
     from: `"Wellness Mobile Spa" <${process.env.EMAIL_USER}>`,
     to: recipientEmail,
@@ -144,13 +155,6 @@ async function sendAdminPurchaseNotification({
   personalMessage,
 }) {
   const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
-  const transporter = nodemailer.createTransport({
-    service: process.env.EMAIL_SERVICE || "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
 
   await transporter.sendMail({
     from: `"Wellness Mobile Spa" <${process.env.EMAIL_USER}>`,
@@ -181,6 +185,7 @@ async function sendAdminPurchaseNotification({
       </div>
     `,
   });
+
   console.log(`[admin-notif] Sale notification sent to ${adminEmail}`);
 }
 
@@ -192,15 +197,6 @@ async function sendAdminNotification({
   currency,
 }) {
   const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
-  const adminPhone = process.env.ADMIN_PHONE_NUMBER;
-
-  const transporter = nodemailer.createTransport({
-    service: process.env.EMAIL_SERVICE || "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
 
   await transporter.sendMail({
     from: `"Wellness Mobile Spa" <${process.env.EMAIL_USER}>`,
@@ -233,27 +229,18 @@ async function sendAdminNotification({
       </div>
     `,
   });
+
   console.log(`[admin-notif] Email alert sent to ${adminEmail}`);
 
-  if (adminPhone && process.env.WHATSAPP_API_KEY) {
-    console.log(`[admin-notif] Triggering WhatsApp API for ${adminPhone}...`);
+  if (process.env.ADMIN_PHONE_NUMBER && process.env.WHATSAPP_API_KEY) {
+    console.log(`[admin-notif] Triggering WhatsApp API for ${process.env.ADMIN_PHONE_NUMBER}...`);
   } else {
-    console.log(
-      "[admin-notif] WhatsApp notification skipped (missing config).",
-    );
+    console.log("[admin-notif] WhatsApp notification skipped (missing config).");
   }
 }
 
 async function sendContactEmail({ name, email, message }) {
   const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
-
-  const transporter = nodemailer.createTransport({
-    service: process.env.EMAIL_SERVICE || "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
 
   await transporter.sendMail({
     from: `"Wellness Mobile Spa — Contact" <${process.env.EMAIL_USER}>`,
@@ -272,6 +259,7 @@ async function sendContactEmail({ name, email, message }) {
       </div>
     `,
   });
+
   console.log(`[contact-email] Message from ${email} sent to ${adminEmail}`);
 }
 
@@ -325,7 +313,27 @@ async function fetchYocoCheckout(checkoutId) {
 
 const app = express();
 import cors from "cors";
-app.use(cors());
+
+const allowedOrigins = [
+  "https://yourwellnessmobilespa.co.za",
+  "https://www.yourwellnessmobilespa.co.za",
+  "http://localhost:5173", // For local development
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        var msg =
+          "The CORS policy for this site does not allow access from the specified Origin.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+  }),
+);
 app.use(express.json());
 
 app.use((req, _res, next) => {

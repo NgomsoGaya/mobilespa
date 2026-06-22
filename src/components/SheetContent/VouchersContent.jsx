@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Button from '../UI/Button';
 import InputField from '../Forms/InputField';
-import Modal from '../UI/Modal';
 import './VouchersContent.css';
 import voucherImage from '../../assets/images/couplestherapy.jpg'; // Reusing an existing image
+import { API_BASE } from '../../apiConfig';
 
 const VouchersContent = ({ showModal }) => {
   const [mode, setMode] = useState('purchase'); // 'purchase' or 'redeem'
@@ -43,7 +43,7 @@ const VouchersContent = ({ showModal }) => {
       }
 
       try {
-        const response = await fetch('/api/create-voucher', {
+        const response = await fetch(`${API_BASE}/api/create-voucher`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -70,7 +70,7 @@ const VouchersContent = ({ showModal }) => {
       }
 
       try {
-        const response = await fetch('/api/redeem-voucher', {
+        const response = await fetch(`${API_BASE}/api/redeem-voucher`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './ContactModal.css';
+import './contactModal.css';
+import { API_BASE } from '../apiConfig';
 
 const ContactModal = ({ isOpen, onClose }) => {
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
@@ -14,7 +15,7 @@ const ContactModal = ({ isOpen, onClose }) => {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(`${API_BASE}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
